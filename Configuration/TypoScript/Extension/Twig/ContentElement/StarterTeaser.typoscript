@@ -1,0 +1,8 @@
+# Starter Teaser Element:
+#
+# CType: starter_teaser
+
+#tt_content.starter_teaser =< lib.twigContentElement
+#tt_content.starter_teaser {
+#  templateName = {$tx_startertwig.ceFolderName}/ceteaser/ceteaser.twig
+#}

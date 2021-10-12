@@ -1,0 +1,13 @@
+# Regular Header Element:
+# A regular header element.
+#
+# CType: header
+
+tt_content.header =< lib.twigContentElement
+tt_content.header {
+  templateName = {$tx_startertwig.ceFolderName}/ceheader/ceheader.twig
+
+  dataProcessors {
+    10 = StarterTeam\StarterTwig\DataProcessing\Content\HeaderProcessor
+  }
+}

@@ -1,0 +1,8 @@
+# Starter Gallery Element:
+#
+# CType: starter_gallery
+
+#tt_content.starter_gallery =< lib.twigContentElement
+#tt_content.starter_gallery {
+#  templateName = {$tx_startertwig.ceFolderName}/cegallery/cegallery.twig
+#}

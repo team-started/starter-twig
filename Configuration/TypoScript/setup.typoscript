@@ -1,0 +1,27 @@
+@import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/'
+
+page {
+  10 >
+
+  10 = PTI
+  10 {
+    templateName = {$starter.paths.defaultTemplateName}
+    templateRootPaths {
+      10 = {$starter.paths.pathToPrivate}Frontend/
+    }
+
+    dataProcessors {
+      10 = StarterTeam\StarterTwig\DataProcessing\Page\PageProcessor
+      10 {
+        rootPageUid = {$starter.pid.defaultHomePageUid}
+
+        menuConfiguration {
+          entryLevel = 0
+          //excludeDoktypes =
+          levels = 5
+          expandAll = 1
+        }
+      }
+    }
+  }
+}

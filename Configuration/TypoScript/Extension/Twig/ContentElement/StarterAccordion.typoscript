@@ -1,0 +1,93 @@
+# Starter Accordion Element:
+#
+# CType: starter_accordion
+
+tt_content.starter_accordion =< lib.twigContentElement
+tt_content.starter_accordion {
+  templateName = {$tx_startertwig.ceFolderName}/ceaccordion/ceaccordion.twig
+
+  dataProcessors {
+    10 = StarterTeam\StarterTwig\DataProcessing\Content\StarterAccordionProcessor
+    10 {
+      assetFields = assets,assets_medium,assets_large
+
+      # this is an example configuration
+      imageConfig {
+        assets {
+          default {
+            maxW = 400
+            maxH = 400
+          }
+
+          variants {
+            5 {
+              config {
+                maxW = 800
+                maxH = 800
+                mediaQuery = (min-width: 600px)
+              }
+            }
+
+            10 {
+              config {
+                maxW = 1000
+                maxH = 1000
+                mediaQuery = (min-width: 1024px)
+              }
+            }
+          }
+        }
+
+        assets_medium {
+          default {
+            maxW = 400
+            maxH = 400
+          }
+
+          variants {
+            5 {
+              config {
+                maxW = 800
+                maxH = 800
+                mediaQuery = (min-width: 600px)
+              }
+            }
+
+            10 {
+              config {
+                maxW = 1000
+                maxH = 1000
+                mediaQuery = (min-width: 1024px)
+              }
+            }
+          }
+        }
+
+        assets_large {
+          default {
+            maxW = 400
+            maxH = 400
+          }
+
+          variants {
+            5 {
+              config {
+                maxW = 800
+                maxH = 800
+                mediaQuery = (min-width: 600px)
+              }
+            }
+
+            10 {
+              config {
+                maxW = 1000
+                maxH = 1000
+                mediaQuery = (min-width: 1024px)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

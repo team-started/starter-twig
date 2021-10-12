@@ -1,0 +1,6 @@
+tx_startertwig {
+  pageFolderName = _layouts
+  ceFolderName = 5-contentelements
+  componentFolderName = 4-components
+  objectsFolderName = 3-objects
+}

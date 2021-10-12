@@ -1,0 +1,13 @@
+# Default configuration for content elements which are using TWIGTEMPLATE directly
+lib.twigContentElement >
+lib.twigContentElement = PTI
+lib.twigContentElement {
+  templateName = Default
+}
+
+@import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/Div.typoscript'
+@import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/Header.typoscript'
+@import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/Text.typoscript'
+@import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/StarterAccordion.typoscript'
+@import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/StarterTextMedia.typoscript'
+@import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/StarterMedia.typoscript'

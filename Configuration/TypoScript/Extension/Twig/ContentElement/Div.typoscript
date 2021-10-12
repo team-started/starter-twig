@@ -1,0 +1,13 @@
+# Regular Div Element:
+# Output a visual divider element.
+#
+# CType: div
+
+tt_content.div =< lib.twigContentElement
+tt_content.div {
+  templateName = {$tx_startertwig.ceFolderName}/cedivider/cedivider.twig
+
+  dataProcessors {
+    10 = StarterTeam\StarterTwig\DataProcessing\Content\DividerProcessor
+  }
+}

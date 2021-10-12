@@ -1,0 +1,29 @@
+# Configuration/Services.yaml
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  StarterTeam\StarterTwig\:
+    resource: '../Classes/*'
+
+  StarterTeam\StarterTwig\Listener\ExtendPictureDataListener:
+    tags:
+      - name: event.listener
+        identifier: 'ext-starter-twig/extendPictureDataListener'
+        method: 'addDisplayInformationForPictureData'
+        event: PrototypeIntegration\PrototypeIntegration\Processor\Event\PictureProcessorRenderedEvent
+        after: ''
+        before: ''
+
+#  Twig\Environment:
+#    public: true
+#    arguments:
+#      - '@StarterTeam\StarterTwig\Twig\Loader\FractalAliasLoader'
+#      - debug: '%twig.debug%'
+#        cache: '@Twig\Cache\CacheInterface'
+
+#  StarterTeam\StarterTwig\Twig\Loader\FractalAliasLoader:
+#    arguments:
+#      $templateRootPath: 'EXT:customer_sitepackage/Resources/Private/Frontend/'
