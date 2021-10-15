@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = [
+$EM_CONF['starter_twig'] = [
     'title' => 'Starter Twig',
     'description' => '',
     'category' => 'plugin',
