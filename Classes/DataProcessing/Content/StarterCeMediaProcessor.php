@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
@@ -72,7 +73,7 @@ class StarterCeMediaProcessor implements PtiDataProcessor
                 'medium' => $this->getColumnValue($data['tx_starter_imagecols_medium']),
                 'large' => $this->getColumnValue($data['tx_starter_imagecols_large']),
             ],
-            'items' => $this->renderGalleryItems($data)
+            'items' => $this->renderGalleryItems($data),
         ];
 
         return $twigData;
@@ -127,7 +128,6 @@ class StarterCeMediaProcessor implements PtiDataProcessor
     }
 
     /**
-     *
      * @param $value
      * @return float|int|string
      */

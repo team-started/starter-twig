@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
@@ -10,7 +11,6 @@ use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 class DividerProcessor implements PtiDataProcessor
 {
     /**
-     *
      * @param array $data
      * @param array $configuration
      * @return array|null

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
@@ -24,28 +25,28 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
         0 => [
             'x' => 'center',
             'y' => 'above',
-            'inside' => true
+            'inside' => true,
         ],
         8 => [
             'x' => 'center',
             'y' => 'below',
-            'inside' => true
+            'inside' => true,
         ],
         17 => [
             'x' => 'right',
-            'inside' => true
+            'inside' => true,
         ],
         18 => [
             'x' => 'left',
-            'inside' => true
+            'inside' => true,
         ],
         25 => [
             'x' => 'right',
-            'inside' => false
+            'inside' => false,
         ],
         26 => [
             'x' => 'left',
-            'inside' => false
+            'inside' => false,
         ],
     ];
 
@@ -59,7 +60,7 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
         17 => 'position-left-right',
         18 => 'position-left-right',
         25 => 'position-left-right',
-        26 => 'position-left-right'
+        26 => 'position-left-right',
     ];
 
     /**
@@ -150,7 +151,6 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
     }
 
     /**
-     *
      * @param array $data
      * @return array|bool
      */
@@ -222,7 +222,7 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
                 'small' => $data['imagecols'] == 12 ? 12 : 12 - $data['imagecols'],
                 'medium' => $data['tx_starter_imagecols_medium'] == 12 ? 12 : 12 - $data['tx_starter_imagecols_medium'],
                 'large' => $data['tx_starter_imagecols_large'] == 12 ? 12 : 12 - $data['tx_starter_imagecols_large'],
-            ]
+            ],
         ];
 
         unset($items['tx_starter_show_small']);

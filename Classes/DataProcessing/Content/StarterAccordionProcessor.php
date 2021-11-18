@@ -1,4 +1,5 @@
 <?php
+
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
 use PrototypeIntegration\PrototypeIntegration\Processor\MediaProcessor;
@@ -118,7 +119,6 @@ class StarterAccordionProcessor implements PtiDataProcessor
     }
 
     /**
-     *
      * @param array $accordionItems
      * @return array
      */

@@ -1,4 +1,5 @@
 <?php
+
 namespace StarterTeam\StarterTwig\Listener;
 
 use PrototypeIntegration\PrototypeIntegration\Processor\Event\PictureProcessorRenderedEvent;
@@ -27,7 +28,7 @@ class ExtendPictureDataListener
 
         foreach ($this->displayInformation as $property => $value) {
             if ($asset->hasProperty($property)) {
-                $assetOptions[$property] = !(bool) $asset->getProperty($property);
+                $assetOptions[$property] = !(bool)$asset->getProperty($property);
             }
         }
 

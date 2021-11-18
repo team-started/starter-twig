@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace StarterTeam\StarterTwig\Processor;
 
@@ -22,7 +23,6 @@ class BodyTextProcessor
     }
 
     /**
-     *
      * @param array $data
      * @param string $dataField
      * @return string
@@ -37,7 +37,6 @@ class BodyTextProcessor
     }
 
     /**
-     *
      * @param array $data
      * @param string $dataField
      * @return string

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace StarterTeam\StarterTwig\Processor;
 
@@ -23,7 +24,6 @@ class CtaProcessor
     }
 
     /**
-     *
      * @param array $data
      * @param string $linkField
      * @param string $linkTextField
@@ -42,7 +42,7 @@ class CtaProcessor
 
         $ctaData = [
             'linkText' => $data[$linkTextField],
-            'link' => $this->linkProcessor->processTypoLinkString($data[$linkField])
+            'link' => $this->linkProcessor->processTypoLinkString($data[$linkField]),
         ];
 
         return $ctaData;

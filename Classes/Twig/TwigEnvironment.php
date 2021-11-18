@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace StarterTeam\StarterTwig\Twig;
 
@@ -41,7 +42,7 @@ class TwigEnvironment extends Environment implements SingletonInterface
                 $fileSystemLoader->addPath($storagePath);
             }
 
-            foreach($namespaces as $namespace => $path) {
+            foreach ($namespaces as $namespace => $path) {
                 $fileSystemLoader->addPath($path, $namespace);
             }
 

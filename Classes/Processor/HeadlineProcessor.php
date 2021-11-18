@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace StarterTeam\StarterTwig\Processor;
 
@@ -8,7 +9,6 @@ namespace StarterTeam\StarterTwig\Processor;
 class HeadlineProcessor
 {
     /**
-     *
      * @param array $data
      * @return string[]
      */
@@ -16,17 +16,16 @@ class HeadlineProcessor
     {
         $headlineFields = [
             'header' => $this->getValue($data, 'header'),
-            'header_position' => $this->getValue($data,'header_position'),
-            'header_layout' => $this->getValue($data,'header_layout'),
-            'tx_starter_headerfontsize' => $this->getValue($data,'tx_starter_headerfontsize'),
-            'tx_starter_headercolor' => $this->getValue($data,'tx_starter_headercolor'),
+            'header_position' => $this->getValue($data, 'header_position'),
+            'header_layout' => $this->getValue($data, 'header_layout'),
+            'tx_starter_headerfontsize' => $this->getValue($data, 'tx_starter_headerfontsize'),
+            'tx_starter_headercolor' => $this->getValue($data, 'tx_starter_headercolor'),
         ];
 
         return $headlineFields;
     }
 
     /**
-     *
      * @param array $data
      * @return array
      */
@@ -34,14 +33,13 @@ class HeadlineProcessor
     {
         $subLineFields = [
             'subheader' => $this->getValue($data, 'subheader'),
-            'header_position' => $this->getValue($data,'header_position'),
+            'header_position' => $this->getValue($data, 'header_position'),
         ];
 
         return $subLineFields;
     }
 
     /**
-     *
      * @param array $data
      * @param string $key
      * @return string

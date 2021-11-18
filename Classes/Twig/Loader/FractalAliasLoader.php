@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace StarterTeam\StarterTwig\Twig\Loader;
 
@@ -20,7 +21,7 @@ class FractalAliasLoader extends FilesystemLoader
     /**
      * @var null
      */
-    private $templatePath = null;
+    private $templatePath;
 
     /**
      * @var array

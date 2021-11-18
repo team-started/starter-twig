@@ -1,12 +1,10 @@
 <?php
+
 declare(strict_types=1);
 namespace StarterTeam\StarterTwig\DataProcessing\Page;
 
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use StarterTeam\StarterTwig\DataProcessing\PageDataProcessorInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\DataProcessing\MenuProcessor;
 
 /**
  * Class PageProcessor
@@ -16,7 +14,6 @@ class PageProcessor extends AbstractPageProcessor implements PtiDataProcessor, P
     use MenuProcessorTrait;
 
     /**
-     *
      * @param array $data
      * @param array $configuration
      * @return array[]|null
@@ -33,7 +30,7 @@ class PageProcessor extends AbstractPageProcessor implements PtiDataProcessor, P
             'contentHtml' => $this->getContentHtml(),
         ];
 
-        unset ($data);
+        unset($data);
 
         return $viewData;
     }
@@ -46,7 +43,7 @@ class PageProcessor extends AbstractPageProcessor implements PtiDataProcessor, P
     }
 
     /**
-     * @return null|array
+     * @return array|null
      */
     public function getLogoData(): ?array
     {

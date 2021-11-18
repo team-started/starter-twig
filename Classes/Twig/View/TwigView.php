@@ -1,4 +1,5 @@
 <?php
+
 namespace StarterTeam\StarterTwig\Twig\View;
 
 use PrototypeIntegration\PrototypeIntegration\View\TemplateBasedView;
