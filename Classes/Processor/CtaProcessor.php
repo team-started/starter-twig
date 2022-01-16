@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace StarterTeam\StarterTwig\Processor;
 
 use PrototypeIntegration\PrototypeIntegration\Processor\TypoLinkStringProcessor;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
 use PrototypeIntegration\PrototypeIntegration\Processor\MediaProcessor;

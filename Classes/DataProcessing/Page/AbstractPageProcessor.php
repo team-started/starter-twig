@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace StarterTeam\StarterTwig\DataProcessing\Page;
 
 use TYPO3\CMS\Core\Context\Context;
