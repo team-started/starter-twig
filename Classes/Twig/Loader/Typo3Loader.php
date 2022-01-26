@@ -50,7 +50,7 @@ class Typo3Loader implements LoaderInterface
         try {
             $this->findTemplate($name);
             return true;
-        } catch (LoaderError $e) {
+        } catch (LoaderError $loaderError) {
             return false;
         }
     }

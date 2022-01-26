@@ -15,8 +15,6 @@ class PageProcessor extends AbstractPageProcessor implements PtiDataProcessor, P
     use MenuProcessorTrait;
 
     /**
-     * @param array $data
-     * @param array $configuration
      * @return array[]|null
      */
     public function process(array $data, array $configuration = []): ?array
@@ -38,22 +36,14 @@ class PageProcessor extends AbstractPageProcessor implements PtiDataProcessor, P
 
     protected function getContentHtml(): string
     {
-        $contentHtml = $this->cObj->cObjGetSingle('< styles.content.get', []);
-
-        return $contentHtml;
+        return $this->cObj->cObjGetSingle('< styles.content.get', []);
     }
 
-    /**
-     * @return array|null
-     */
     public function getLogoData(): ?array
     {
         return [];
     }
 
-    /**
-     * @return array|null
-     */
     public function getSiteFooterData(): ?array
     {
         return [];

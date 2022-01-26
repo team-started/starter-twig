@@ -2,7 +2,7 @@
 
 $EM_CONF['starter_twig'] = [
     'title' => 'Starter Twig',
-    'description' => '',
+    'description' => 'TYPO3 data processing to handle twig templates',
     'category' => 'plugin',
     'state' => 'stable',
     'constraints' => [

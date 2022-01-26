@@ -29,43 +29,31 @@ class TwigView extends AbstractView implements ViewInterface, TemplateBasedView
     public function render(): string
     {
         if (empty($this->template)) {
-            throw new \RuntimeException('Template file missing.', 1519205250412);
+            throw new \RuntimeException('Template file missing.', 1_519_205_250_412);
         }
 
         try {
             return $this->twigEnvironment->render($this->template, $this->variables);
         } catch (\Exception $exception) {
-            throw new \RuntimeException('Twig view error: ' . $exception->getMessage(), 1519205228169, $exception);
+            throw new \RuntimeException('Twig view error: ' . $exception->getMessage(), 1_519_205_228_169, $exception);
         }
     }
 
-    /**
-     * @return string
-     */
     public function getTemplate(): string
     {
         return $this->template;
     }
 
-    /**
-     * @param string $template
-     */
     public function setTemplate(string $template): void
     {
         $this->template = $template;
     }
 
-    /**
-     * @return array
-     */
     public function getVariables(): array
     {
         return $this->variables;
     }
 
-    /**
-     * @param array $variables
-     */
     public function setVariables(array $variables): void
     {
         $this->variables = $variables;

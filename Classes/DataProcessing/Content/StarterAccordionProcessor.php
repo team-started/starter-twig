@@ -17,15 +17,30 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class StarterAccordionProcessor implements PtiDataProcessor
 {
+    /**
+     * @var string
+     */
     const ACCORDION_TABLE = 'tx_starter_accordion_element';
+
+    /**
+     * @var string
+     */
     const ACCORDION_REFERENCE_FIELD = 'tt_content_accordion';
+
+    /**
+     * @var int
+     */
     const ACCORDION_TYPE_TEXT = 0;
+
+    /**
+     * @var int
+     */
     const ACCORDION_TYPE_IMAGE = 1;
 
     /**
      * @var array
      */
-    protected $configuration;
+    protected $configuration = [];
 
     /**
      * @var ContentObjectRenderer
@@ -71,11 +86,6 @@ class StarterAccordionProcessor implements PtiDataProcessor
         $this->logger = $logManager->getLogger(__CLASS__);
     }
 
-    /**
-     * @param array $data
-     * @param array $configuration
-     * @return array|null
-     */
     public function process(array $data, array $configuration): ?array
     {
         $this->configuration = $configuration;
@@ -95,45 +105,33 @@ class StarterAccordionProcessor implements PtiDataProcessor
             return null;
         }
 
-        $twigData = [
+        return [
             'uid' => $data['uid'],
             'header' => $this->getHeader($data),
             'space_before_class' => $data['space_before_class'],
             'space_after_class' => $data['space_after_class'],
             'items' => $this->renderAccordionItems($accordionItems),
         ];
-
-        return $twigData;
     }
 
-    /**
-     * @param array $data
-     * @return array
-     */
     protected function getHeader(array $data): array
     {
-        $header = [
+        return [
             'headline' => $this->headlineProcessor->processHeadline($data),
             'subline' => $this->headlineProcessor->processSubLine($data),
         ];
-
-        return $header;
     }
 
-    /**
-     * @param array $accordionItems
-     * @return array
-     */
     protected function renderAccordionItems(array $accordionItems): array
     {
         $accordionData = [];
         foreach ($accordionItems as $accordionItem) {
             try {
                 $accordionData[] = $this->translateSliderItem($accordionItem);
-            } catch (\Exception $e) {
+            } catch (\Exception $exception) {
                 // There was an error rendering the accordionItem. Log the error and ignore the item
                 $message = sprintf('Could not render accordion item with UID %s', $accordionItem['uid']);
-                $this->logger->warning($message, ['exception' => $e]);
+                $this->logger->warning($message, ['exception' => $exception]);
             }
         }
 
@@ -142,30 +140,22 @@ class StarterAccordionProcessor implements PtiDataProcessor
 
     /**
      * Convert a accordion item record to the accordion item required by the view.
-     *
-     * @param array $accordionItem
-     * @return array
      */
     protected function translateSliderItem(array $accordionItem): array
     {
         $assets = $this->getAssets($accordionItem);
 
-        $translatedAccordionItem = [
+        return [
             'title' => $accordionItem['header'],
             'bodytext' => $this->bodyTextProcessor->processBodyText($accordionItem),
             'image' => $assets,
         ];
-
-        return $translatedAccordionItem;
     }
 
     /**
      * Retrieve the accordion items from the db.
-     *
-     * @param array $data
-     * @return array
      */
-    protected function getAccordionItems(array $data)
+    protected function getAccordionItems(array $data): array
     {
         return $this->contentObject->getRecords(
             self::ACCORDION_TABLE,
@@ -186,7 +176,7 @@ class StarterAccordionProcessor implements PtiDataProcessor
         foreach ($this->assetFields as $assetField) {
             if (!isset($this->configuration['imageConfig'][$assetField])) {
                 $message = sprintf(
-                    'Abort asset rending for accordionItem with UID \'%s\', required asset configuration for asset \'%s\' not available.',
+                    "Abort asset rending for accordionItem with UID '%s', required asset configuration for asset '%s' not available.",
                     $accordionItem['uid'],
                     $assetField
                 );
@@ -204,7 +194,7 @@ class StarterAccordionProcessor implements PtiDataProcessor
 
             if (count($mediaFileData) != 1) {
                 $message = sprintf(
-                    'Invalid number \'%s\' of images for accordionItem \'%s\'',
+                    "Invalid number '%s' of images for accordionItem '%s'",
                     count($mediaFileData),
                     $accordionItem['uid']
                 );

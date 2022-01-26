@@ -24,7 +24,7 @@ abstract class AbstractPageProcessor
     /**
      * @var array
      */
-    protected $conf;
+    protected $conf = [];
 
     /**
      * @var ObjectManager

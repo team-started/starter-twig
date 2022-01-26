@@ -1,10 +1,8 @@
 <?php
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
 defined('TYPO3_MODE') || die();
 
-ExtensionManagementUtility::addStaticFile(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
     'starter_twig',
     'Configuration/TypoScript',
     'Starter Twig'

@@ -11,7 +11,14 @@ use PrototypeIntegration\PrototypeIntegration\Processor\TypoLinkStringProcessor;
  */
 class CtaProcessor
 {
+    /**
+     * @var string
+     */
     const CTA_LINK_FIELD = 'tx_starter_ctalink';
+
+    /**
+     * @var string
+     */
     const CTA_LINKTEXT_FIELD = 'tx_starter_ctalink_text';
 
     /**
@@ -24,13 +31,6 @@ class CtaProcessor
         $this->linkProcessor = $typoLinkStringProcessor;
     }
 
-    /**
-     * @param array $data
-     * @param string $linkField
-     * @param string $linkTextField
-     * @param bool $allowEmptyLinkText
-     * @return array|null
-     */
     public function processCta(
         array $data,
         string $linkField = self::CTA_LINK_FIELD,
@@ -41,11 +41,9 @@ class CtaProcessor
             return null;
         }
 
-        $ctaData = [
+        return [
             'linkText' => $data[$linkTextField],
             'link' => $this->linkProcessor->processTypoLinkString($data[$linkField]),
         ];
-
-        return $ctaData;
     }
 }

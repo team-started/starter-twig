@@ -11,6 +11,9 @@ use PrototypeIntegration\PrototypeIntegration\Processor\RichtextProcessor;
  */
 class BodyTextProcessor
 {
+    /**
+     * @var string
+     */
     const DEFAULT_DATA_FIELD_NAME = 'bodytext';
 
     /**
@@ -23,11 +26,6 @@ class BodyTextProcessor
         $this->rteProcessor = $richtextProcessor;
     }
 
-    /**
-     * @param array $data
-     * @param string $dataField
-     * @return string
-     */
     public function processBodyText(array $data, string $dataField = self::DEFAULT_DATA_FIELD_NAME): string
     {
         if (empty($dataField)) {
@@ -37,11 +35,6 @@ class BodyTextProcessor
         return $this->rteProcessor->processRteText($data[$dataField]);
     }
 
-    /**
-     * @param array $data
-     * @param string $dataField
-     * @return string
-     */
     public function processPlainBodyText(array $data, string $dataField = self::DEFAULT_DATA_FIELD_NAME): string
     {
         if (empty($dataField)) {

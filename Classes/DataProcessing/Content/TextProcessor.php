@@ -19,7 +19,7 @@ class TextProcessor implements PtiDataProcessor
     /**
      * @var array
      */
-    protected $configuration;
+    protected $configuration = [];
 
     /**
      * @var ContentObjectRenderer
@@ -64,7 +64,7 @@ class TextProcessor implements PtiDataProcessor
     {
         $this->configuration = $configuration;
 
-        $twigData = [
+        return [
             'uid' => $data['uid'],
             'header' => $this->getHeader($data),
             'space_before_class' => $data['space_before_class'],
@@ -73,17 +73,13 @@ class TextProcessor implements PtiDataProcessor
             'tx_starter_cta' => $this->ctaProcessor->processCta($data),
             'tx_starter_backgroundcolor' => $data['tx_starter_backgroundcolor'],
         ];
-
-        return $twigData;
     }
 
     protected function getHeader(array $data): array
     {
-        $header = [
+        return [
             'headline' => $this->headlineProcessor->processHeadline($data),
             'subline' => $this->headlineProcessor->processSubLine($data),
         ];
-
-        return $header;
     }
 }
