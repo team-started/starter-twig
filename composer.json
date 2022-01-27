@@ -13,8 +13,7 @@
         "php": "^7.4",
         "twig/twig": "^3",
         "typo3/cms-core": "^10.4",
-        "starterteam/starter": "^3.0",
-        "starterteam/starter-sitepackage": "^3.0"
+        "starterteam/starter": "^3.0"
     },
     "autoload": {
         "psr-4": {
