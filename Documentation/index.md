@@ -1,0 +1,4 @@
+# Extension EXT:starter
+
+## Inhaltsübersicht
+
