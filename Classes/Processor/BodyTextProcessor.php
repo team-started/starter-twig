@@ -37,10 +37,16 @@ class BodyTextProcessor
 
     public function processPlainBodyText(array $data, string $dataField = self::DEFAULT_DATA_FIELD_NAME): string
     {
+        $value = '';
+
         if (empty($dataField)) {
             $dataField = self::DEFAULT_DATA_FIELD_NAME;
         }
 
-        return strip_tags($data[$dataField]);
+        if (isset($data[$dataField]) && !empty($data[$dataField])) {
+            $value = strip_tags($data[$dataField]);
+        }
+
+        return $value;
     }
 }
