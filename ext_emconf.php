@@ -5,6 +5,7 @@ $EM_CONF['starter_twig'] = [
     'description' => 'TYPO3 data processing to handle twig templates',
     'category' => 'plugin',
     'state' => 'stable',
+    'version' => '3.1.0',
     'constraints' => [
         'depends' => [
             'pti' => '3.0.0-3.99.99',
