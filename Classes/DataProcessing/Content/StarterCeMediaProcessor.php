@@ -70,7 +70,7 @@ class StarterCeMediaProcessor implements PtiDataProcessor
             'space_before_class' => $data['space_before_class'],
             'space_after_class' => $data['space_after_class'],
             'columns' => [
-                'small' => $this->getColumnValue($data['imagecols']),
+                'small' => $this->getColumnValue($data['imagecols'], 1),
                 'medium' => $this->getColumnValue($data['tx_starter_imagecols_medium']),
                 'large' => $this->getColumnValue($data['tx_starter_imagecols_large']),
             ],
@@ -117,15 +117,16 @@ class StarterCeMediaProcessor implements PtiDataProcessor
     }
 
     /**
-     * @param $value
-     * @return float|int|string
+     * @param int|string $value
+     * @param int|string $default
+     * @return int|string
      */
-    protected function getColumnValue($value)
+    protected function getColumnValue($value, $default = 'inherit')
     {
-        if (empty($value)) {
-            return 'inherit';
+        if (empty($value) && (!empty($default) && $default !== 0)) {
+            return $default;
         }
 
-        return (int)(12 / (int)$value);
+        return $value;
     }
 }

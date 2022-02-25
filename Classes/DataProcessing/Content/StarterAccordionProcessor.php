@@ -17,6 +17,8 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class StarterAccordionProcessor implements PtiDataProcessor
 {
+    use AssetTrait;
+
     /**
      * @var string
      */
@@ -30,12 +32,12 @@ class StarterAccordionProcessor implements PtiDataProcessor
     /**
      * @var int
      */
-    const ACCORDION_TYPE_TEXT = 0;
+    const ACCORDION_TYPE_TEXT = 1;
 
     /**
      * @var int
      */
-    const ACCORDION_TYPE_IMAGE = 1;
+    const ACCORDION_TYPE_IMAGE = 0;
 
     /**
      * @var array
@@ -149,6 +151,8 @@ class StarterAccordionProcessor implements PtiDataProcessor
             'title' => $accordionItem['header'],
             'bodytext' => $this->bodyTextProcessor->processBodyText($accordionItem),
             'image' => $assets,
+            'tx_starter_imageorient' => $this->getImagePosition((int)$accordionItem['imageorient']),
+            'grid' => $this->getGrid($accordionItem, $assets),
         ];
     }
 
@@ -169,7 +173,7 @@ class StarterAccordionProcessor implements PtiDataProcessor
     {
         $resultMedia = null;
 
-        if ((int)$accordionItem['type'] !== self::ACCORDION_TYPE_IMAGE) {
+        if ((int)$accordionItem['type'] === self::ACCORDION_TYPE_TEXT) {
             return $resultMedia;
         }
 

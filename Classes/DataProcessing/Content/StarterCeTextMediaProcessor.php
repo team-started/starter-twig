@@ -17,52 +17,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class StarterCeTextMediaProcessor implements PtiDataProcessor
 {
-    /**
-     * Image position definition
-     *
-     * @var array
-     */
-    const IMAGE_POSITIONS = [
-        0 => [
-            'x' => 'center',
-            'y' => 'above',
-            'inside' => true,
-        ],
-        8 => [
-            'x' => 'center',
-            'y' => 'below',
-            'inside' => true,
-        ],
-        17 => [
-            'x' => 'right',
-            'inside' => true,
-        ],
-        18 => [
-            'x' => 'left',
-            'inside' => true,
-        ],
-        25 => [
-            'x' => 'right',
-            'inside' => false,
-        ],
-        26 => [
-            'x' => 'left',
-            'inside' => false,
-        ],
-    ];
-
-    /**
-     * Image crop definition by image position
-     * @var array
-     */
-    const IMAGE_CROP_VARIANT = [
-        0 => 'position-above-below',
-        8 => 'position-above-below',
-        17 => 'position-left-right',
-        18 => 'position-left-right',
-        25 => 'position-left-right',
-        26 => 'position-left-right',
-    ];
+    use AssetTrait;
 
     /**
      * @var array
@@ -128,7 +83,7 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
             'bodytext' =>  $this->bodyTextProcessor->processBodyText($data),
             'tx_starter_cta' => $this->ctaProcessor->processCta($data),
             'tx_starter_backgroundcolor' => $data['tx_starter_backgroundcolor'],
-            'tx_starter_imageorient' => self::IMAGE_POSITIONS[$data['imageorient']],
+            'tx_starter_imageorient' => $this->getImagePosition((int)$data['imageorient']),
             'grid' => $this->getGrid($data, $mediaItems),
         ];
 
@@ -151,7 +106,7 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
         ];
 
         $imageConfig = $this->configuration['imageConfig'];
-        $imageCropPosition = self::IMAGE_CROP_VARIANT[$data['imageorient']];
+        $imageCropPosition = $this->getImageCropVariant((int)$data['imageorient']);
         if (isset($imageConfig['overrideRenderingByImageOrient'][$imageCropPosition])) {
             $imageConfig = $imageConfig['overrideRenderingByImageOrient'][$imageCropPosition];
         }
@@ -174,45 +129,5 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
         }
 
         return $resultMedia;
-    }
-
-    protected function getGrid(array $data, array &$mediaItems): array
-    {
-        $items = null;
-
-        if ($mediaItems['image']) {
-            $items = &$mediaItems['image'];
-        }
-
-        if ($mediaItems['video']) {
-            $items = &$mediaItems['video'];
-        }
-
-        if (is_null($items)) {
-            return [];
-        }
-
-        $gridData = [
-            'switchOrderOnSmall' => true,
-            'showOnSmall' => $items['tx_starter_show_small'],
-            'showOnMedium' => $items['tx_starter_show_medium'],
-            'showOnLarge' => $items['tx_starter_show_large'],
-            'imageCols' => [
-                'small' => empty($data['imagecols']) ? 12 : (int)$data['imagecols'],
-                'medium' => empty($data['tx_starter_imagecols_medium']) ? 6 : (int)$data['tx_starter_imagecols_medium'],
-                'large' => empty($data['tx_starter_imagecols_large']) ? 6 : (int)$data['tx_starter_imagecols_large'],
-            ],
-            'textCols' => [
-                'small' => $data['imagecols'] == 12 ? 12 : 12 - $data['imagecols'],
-                'medium' => $data['tx_starter_imagecols_medium'] == 12 ? 12 : 12 - $data['tx_starter_imagecols_medium'],
-                'large' => $data['tx_starter_imagecols_large'] == 12 ? 12 : 12 - $data['tx_starter_imagecols_large'],
-            ],
-        ];
-
-        unset($items['tx_starter_show_small']);
-        unset($items['tx_starter_show_medium']);
-        unset($items['tx_starter_show_large']);
-
-        return $gridData;
     }
 }
