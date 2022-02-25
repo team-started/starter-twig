@@ -19,7 +19,7 @@ abstract class AbstractPageProcessor
      * The content object to render.
      * @var ContentObjectRenderer
      */
-    public $cObj;
+    protected $cObj;
 
     /**
      * @var array
@@ -47,5 +47,10 @@ abstract class AbstractPageProcessor
         $this->typoScriptService = $this->objectManager->get(TypoScriptService::class);
         $this->context = $this->objectManager->get(Context::class);
         $this->cObj = $this->objectManager->get(ContentObjectRenderer::class);
+    }
+
+    public function setContentObjectRenderer(ContentObjectRenderer $cObj): void
+    {
+        $this->cObj = $cObj;
     }
 }
