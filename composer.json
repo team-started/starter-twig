@@ -12,8 +12,8 @@
     "require": {
         "php": "^7.4",
         "twig/twig": "^3",
-		"typo3/cms-core": "^11.5",
-        "starterteam/starter": "^3.2"
+        "typo3/cms-core": "^11.5",
+        "starterteam/starter": "dev-main"
     },
     "autoload": {
         "psr-4": {
