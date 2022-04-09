@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\Twig;
 
-use StarterTeam\StarterTwig\Twig\Loader\Typo3Loader;
 use Twig\Environment;
+use Twig\Error\LoaderError;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\FilesystemLoader;
@@ -18,41 +18,23 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class TwigEnvironment extends Environment implements SingletonInterface
 {
-    /**
-     * @var array
-     */
-    protected $configuration = [];
+    protected ?array $configuration = [];
 
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     * @throws LoaderError
+     * @todo fixme use TYPO3’s cache framework instead of filesystem for caching
+     */
     public function __construct()
     {
-        $this->configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('starter_twig');
+        $this->loadConfiguration();
 
-        $additionalLoaders = $this->getAdditionalLoaders();
+        $additionalLoaders = array_merge($this->getAdditionalLoaders(), [$this->defineFileSystemLoader()]);
         $loader = new ChainLoader($additionalLoaders);
 
-        /**@var Typo3Loader $typo3Loader*/
-        $typo3Loader = GeneralUtility::makeInstance(Typo3Loader::class);
-        $loader->addLoader($typo3Loader);
-
-        $storagePath = $this->getTemplateStoragePath();
-        $namespaces = $this->getNamespaces();
-
-        if (! empty($storagePath) || ! empty($namespaces)) {
-            $fileSystemLoader = new FilesystemLoader();
-            if (! empty($storagePath)) {
-                $fileSystemLoader->addPath($storagePath);
-            }
-
-            foreach ($namespaces as $namespace => $path) {
-                $fileSystemLoader->addPath($path, $namespace);
-            }
-
-            $loader->addLoader($fileSystemLoader);
-        }
-
         parent::__construct($loader, [
-            // fixme use TYPO3’s cache framework instead of filesystem for caching
-            'cache' => $this->configuration['disableCache'] ? false : static::getCacheDirectory(),
+            'cache' => $this->getConfigurationWithKey('disableCache') ? false : static::getCacheDirectory(),
             'debug' => $GLOBALS['TYPO3_CONF_VARS']['FE']['debug'],
         ]);
 
@@ -82,37 +64,79 @@ class TwigEnvironment extends Environment implements SingletonInterface
     }
 
     /**
-     * @return string/null
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    protected function getTemplateStoragePath(): ?string
+    protected function getNamespaces(): array
     {
-        $rootTemplatePath = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get(
-            'starter_twig',
-            'rootTemplatePath'
-        );
-        if (!isset($rootTemplatePath)) {
-            return null;
-        }
-
-        return GeneralUtility::getFileAbsFileName($rootTemplatePath);
-    }
-
-    protected function getNamespaces()
-    {
-        try {
-            $namespaces = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get(
-                'starter_twig',
-                'namespaces'
-            );
-        } catch (ExtensionConfigurationExtensionNotConfiguredException $extensionConfigurationExtensionNotConfiguredException) {
-            return [];
-        } catch (ExtensionConfigurationPathDoesNotExistException $extensionConfigurationPathDoesNotExistException) {
-            return [];
-        }
-
+        $namespaces = $this->getConfigurationWithKey('namespaces');
         return array_map(
             '\TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName',
             $namespaces
         );
+    }
+
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    private function getTemplatePath(): ?string
+    {
+        $templatePath = $this->getConfigurationWithKey('rootTemplatePath');
+        if (is_string($templatePath)) {
+            return GeneralUtility::getFileAbsFileName($templatePath);
+        }
+
+        return null;
+    }
+
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     * @throws LoaderError
+     */
+    private function defineFileSystemLoader(): FilesystemLoader
+    {
+        $fileSystemLoader = new FilesystemLoader();
+
+        if (!empty($storagePath = $this->getTemplatePath())) {
+            $fileSystemLoader->addPath($storagePath);
+        }
+
+        if (!empty($namespaces = $this->getNamespaces())) {
+            foreach ($namespaces as $namespace => $path) {
+                $fileSystemLoader->addPath($path, $namespace);
+            }
+        }
+
+        return $fileSystemLoader;
+    }
+
+    /**
+     * @return null|mixed
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    private function getConfigurationWithKey(string $key)
+    {
+        if (is_null($this->configuration)) {
+            $this->loadConfiguration();
+        }
+
+        if (array_key_exists($key, $this->configuration)) {
+            return $this->configuration[$key];
+        }
+
+        return null;
+    }
+
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    private function loadConfiguration()
+    {
+        $this->configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+            ->get('starter_twig');
     }
 }

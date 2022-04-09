@@ -8,57 +8,38 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Loads templates using alias names. Alias are a concept of Frctl (https://fractal.build/)
+ * Loads templates using alias names. Alias are a concept of Fractal (https://fractal.build/)
  *
  * This loader supports alias names for Templates.
- * For example you can load a template like this: @headline
+ * For example, you can load a template like this @headline instead of /path/sub-path/headline.twig
  */
 class FractalAliasLoader extends FilesystemLoader
 {
-    /**
-     * @var null
-     */
-    private $templatePath;
+    private ?string $templatePath = null;
+
+    private ?array $configuration = null;
 
     private array $aliases = [];
 
-    public function __construct(string $templateRootPath = null)
+    /**
+     * @throws LoaderError
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    public function __construct(?string $templateRootPath = null)
     {
-        if ($templateRootPath) {
-            $this->templatePath = GeneralUtility::getFileAbsFileName($templateRootPath);
-        }
+        $this->loadConfiguration();
+        $this->setTemplatePath($templateRootPath);
 
-        if (is_null($this->templatePath)) {
-            $this->templatePath = $this->getTemplateStoragePath();
-        }
+        parent::__construct([$this->templatePath]);
 
-        if ($this->templatePath === null) {
-            $this->errorCache[$this->templatePath] = 'There was no template path found for FractalAliasLoader.';
-
-            throw new LoaderError($this->errorCache[$this->templatePath]);
-        }
-
-        parent::__construct([$this->templatePath], null);
-
-        foreach ($this->paths as $path) {
-            $finder = new Finder();
-            $files = $finder
-                ->files()
-                ->in($path)
-                ->name('*.twig')
-                ->followLinks();
-
-            /** @var SplFileInfo $file */
-            foreach ($files as $file) {
-                $handle = basename($file->getBasename(), '.' . $file->getExtension());
-                $handle = '@' . strtolower($handle);
-                $this->aliases[$handle] = $file->getPathname();
-            }
-        }
+        $this->setAlias();
     }
 
     /**
@@ -105,14 +86,80 @@ class FractalAliasLoader extends FilesystemLoader
         return false;
     }
 
-    protected function getTemplateStoragePath(): ?string
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    private function loadConfiguration()
     {
-        $rootTemplatePath = GeneralUtility::makeInstance(ExtensionConfiguration::class)
-            ->get('starter_twig', 'rootTemplatePath');
-        if (!isset($rootTemplatePath)) {
-            return null;
+        $this->configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+            ->get('starter_twig');
+    }
+
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     * @throws LoaderError
+     */
+    private function setTemplatePath(?string $templateRootPath)
+    {
+        if ($templateRootPath) {
+            $this->templatePath = GeneralUtility::getFileAbsFileName($templateRootPath);
         }
 
-        return GeneralUtility::getFileAbsFileName($rootTemplatePath);
+        if (empty($this->templatePath)) {
+            $templatePath = $this->getConfigurationWithKey('rootTemplatePath');
+            $this->templatePath = GeneralUtility::getFileAbsFileName($templatePath);
+        }
+
+        if (empty($this->templatePath)) {
+            $this->errorCache[$this->templatePath] = 'There was no template path found for FractalAliasLoader.';
+            throw new LoaderError($this->errorCache[$this->templatePath]);
+        }
+    }
+
+    /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    private function setAlias()
+    {
+        foreach ($this->paths as $path) {
+            $finder = new Finder();
+            if (!is_null($notPathConfiguration = $this->getConfigurationWithKey('finderNotPath'))) {
+                $finder->notPath($notPathConfiguration);
+            }
+
+            $files = $finder
+                ->files()
+                ->in($path)
+                ->name('*.twig')
+                ->followLinks();
+
+            /** @var SplFileInfo $file */
+            foreach ($files as $file) {
+                $handle = basename($file->getBasename(), '.' . $file->getExtension());
+                $handle = '@' . strtolower($handle);
+                $this->aliases[$handle] = $file->getPathname();
+            }
+        }
+    }
+
+    /**
+     * @return null|mixed
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     */
+    private function getConfigurationWithKey(string $key)
+    {
+        if (is_null($this->configuration)) {
+            $this->loadConfiguration();
+        }
+
+        if (array_key_exists($key, $this->configuration)) {
+            return $this->configuration[$key];
+        }
+
+        return null;
     }
 }

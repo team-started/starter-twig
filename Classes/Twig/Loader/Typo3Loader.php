@@ -14,15 +14,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class Typo3Loader implements LoaderInterface
 {
-    /**
-     * @var array
-     */
-    protected $cache = [];
+    protected array $cache = [];
 
-    /**
-     * @var array
-     */
-    protected $errorCache = [];
+    protected array $errorCache = [];
 
     public function getSourceContext($name): Source
     {
@@ -58,9 +52,6 @@ class Typo3Loader implements LoaderInterface
     /**
      * Checks if the template can be found.
      *
-     * @param string $name The template name
-     * @param bool $throw Whether to throw an exception when an error occurs
-     *
      * @return false|string The template name or false
      * @throws LoaderError
      */
@@ -76,7 +67,7 @@ class Typo3Loader implements LoaderInterface
 
         $path = GeneralUtility::getFileAbsFileName($name);
 
-        if (empty($path) || ! \is_file($path)) {
+        if (empty($path) || !\is_file($path)) {
             $this->errorCache[$name] = \sprintf('unable to find template "%s".', $name);
             throw new LoaderError($this->errorCache[$name]);
         }

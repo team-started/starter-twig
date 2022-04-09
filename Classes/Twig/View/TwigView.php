@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace StarterTeam\StarterTwig\Twig\View;
 
 use PrototypeIntegration\PrototypeIntegration\View\TemplateBasedView;
@@ -10,15 +12,9 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
 class TwigView extends AbstractView implements ViewInterface, TemplateBasedView
 {
-    /**
-     * @var TwigEnvironment
-     */
-    protected $twigEnvironment;
+    protected TwigEnvironment $twigEnvironment;
 
-    /**
-     * @var string
-     */
-    protected $template;
+    protected string $template;
 
     public function __construct(string $template = '')
     {
