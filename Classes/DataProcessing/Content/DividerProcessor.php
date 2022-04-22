@@ -15,6 +15,7 @@ class DividerProcessor implements PtiDataProcessor
     {
         return [
             'uid' => $data['uid'],
+            'CType' => str_replace('_', '-', $data['CType']),
             'space_before_class' => $data['space_before_class'],
             'space_after_class' => $data['space_after_class'],
             'tx_starter_bordercolor' => $data['tx_starter_bordercolor'],

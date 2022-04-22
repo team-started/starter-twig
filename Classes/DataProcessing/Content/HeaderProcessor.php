@@ -42,6 +42,7 @@ class HeaderProcessor implements PtiDataProcessor
 
         return [
             'uid' => $data['uid'],
+            'CType' => str_replace('_', '-', $data['CType']),
             'header' => [
                 'headline' => $this->headlineProcessor->processHeadline($data),
                 'subline' => $this->headlineProcessor->processSubLine($data),

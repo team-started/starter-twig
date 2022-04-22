@@ -66,6 +66,7 @@ class TextProcessor implements PtiDataProcessor
 
         return [
             'uid' => $data['uid'],
+            'CType' => str_replace('_', '-', $data['CType']),
             'header' => $this->getHeader($data),
             'space_before_class' => $data['space_before_class'],
             'space_after_class' => $data['space_after_class'],
