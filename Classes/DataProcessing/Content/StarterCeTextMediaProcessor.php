@@ -84,6 +84,7 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
             'bodytext' =>  $this->bodyTextProcessor->processBodyText($data),
             'tx_starter_cta' => $this->ctaProcessor->processCta($data),
             'tx_starter_backgroundcolor' => $data['tx_starter_backgroundcolor'],
+            'tx_starter_background_fluid' => (bool) $data['tx_starter_background_fluid'],
             'tx_starter_imageorient' => $this->getImagePosition((int)$data['imageorient']),
             'grid' => $this->getGrid($data, $mediaItems),
         ];
