@@ -76,6 +76,7 @@ class StarterCeMediaProcessor implements PtiDataProcessor
                 'large' => $this->getColumnValue($data['tx_starter_imagecols_large']),
             ],
             'items' => $this->renderGalleryItems($data),
+            'tx_starter_visibility' => $data['tx_starter_visibility'],
             'tx_starter_background_fluid' => (bool) $data['tx_starter_background_fluid'],
         ];
     }

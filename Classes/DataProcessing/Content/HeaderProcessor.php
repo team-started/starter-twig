@@ -49,6 +49,7 @@ class HeaderProcessor implements PtiDataProcessor
             ],
             'space_before_class' => $data['space_before_class'],
             'space_after_class' => $data['space_after_class'],
+            'tx_starter_visibility' => $data['tx_starter_visibility'],
             'tx_starter_backgroundcolor' => $data['tx_starter_backgroundcolor'],
             'tx_starter_background_fluid' => (bool) $data['tx_starter_background_fluid'],
         ];

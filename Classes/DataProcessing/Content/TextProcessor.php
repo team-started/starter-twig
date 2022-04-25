@@ -72,6 +72,7 @@ class TextProcessor implements PtiDataProcessor
             'space_after_class' => $data['space_after_class'],
             'bodytext' =>  $this->bodyTextProcessor->processBodyText($data),
             'tx_starter_cta' => $this->ctaProcessor->processCta($data),
+            'tx_starter_visibility' => $data['tx_starter_visibility'],
             'tx_starter_backgroundcolor' => $data['tx_starter_backgroundcolor'],
             'tx_starter_background_fluid' => (bool) $data['tx_starter_background_fluid'],
         ];
