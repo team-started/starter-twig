@@ -28,6 +28,14 @@ class HeadlineProcessor
         ];
     }
 
+    public function processOverLine(array $data): array
+    {
+        return [
+            'tx_starter_overline' => $this->getValue($data, 'tx_starter_overline'),
+            'header_position' => $this->getValue($data, 'header_position'),
+        ];
+    }
+
     protected function getValue(array $data, string $key): string
     {
         $value = '';

@@ -78,21 +78,27 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
         $twigData = [
             'uid' => $data['uid'],
             'CType' => str_replace('_', '-', $data['CType']),
-            'header' => $this->getHeader($data),
+            'header' => $this->headlineProcessor->processHeadline($data),
+            'subheader' => $this->headlineProcessor->processSubLine($data),
+            'overline' => $this->headlineProcessor->processOverLine($data),
             'space_before_class' => $data['space_before_class'],
             'space_after_class' => $data['space_after_class'],
             'bodytext' =>  $this->bodyTextProcessor->processBodyText($data),
+            'imageorient' => $this->getImagePosition((int)$data['imageorient']),
             'tx_starter_cta' => $this->ctaProcessor->processCta($data),
             'tx_starter_visibility' => $data['tx_starter_visibility'],
             'tx_starter_backgroundcolor' => $data['tx_starter_backgroundcolor'],
             'tx_starter_background_fluid' => (bool) $data['tx_starter_background_fluid'],
-            'tx_starter_imageorient' => $this->getImagePosition((int)$data['imageorient']),
+            'tx_starter_container' => $data['tx_starter_width'],
             'grid' => $this->getGrid($data, $mediaItems),
         ];
 
         return array_merge($twigData, $mediaItems);
     }
 
+    /**
+     * @deprecated since 4.0.0 and would be remove in 5.0.0
+     */
     protected function getHeader(array $data): array
     {
         return [
@@ -108,7 +114,8 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
             'video' => false,
         ];
 
-        $imageConfig = $this->configuration['imageConfig'];
+        $imageConfig = $this->configuration['imageConfig'] ?? [];
+        $imagePlaceholderConfig = $this->configuration['imageConfigPlaceholder'] ?? [];
         $imageCropPosition = $this->getImageCropVariant((int)$data['imageorient']);
         if (isset($imageConfig['overrideRenderingByImageOrient'][$imageCropPosition])) {
             $imageConfig = $imageConfig['overrideRenderingByImageOrient'][$imageCropPosition];
@@ -118,13 +125,16 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
             $data,
             'tt_content',
             'assets',
-            $imageConfig
+            $imageConfig,
+            $imagePlaceholderConfig
         );
 
         if (count($media) == 1) {
             if ($media[0]['type'] == 'image') {
                 $resultMedia['image'] = $media[0]['image'];
                 $resultMedia['image']['uid'] = $media[0]['uid'];
+                $resultMedia['image']['placeholder'] =
+                    isset($media[0]['thumbnail']) ? $media[0]['thumbnail']['default'] : null;
             } else {
                 $resultMedia['video'] = $media[0]['video'];
                 $resultMedia['video']['uid'] = $media[0]['uid'];

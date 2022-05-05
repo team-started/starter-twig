@@ -67,20 +67,30 @@ class StarterCeMediaProcessor implements PtiDataProcessor
         return [
             'uid' => $data['uid'],
             'CType' => str_replace('_', '-', $data['CType']),
-            'header' => $this->getHeader($data),
+            'header' => $this->headlineProcessor->processHeadline($data),
+            'subheader' => $this->headlineProcessor->processSubLine($data),
+            'overline' => $this->headlineProcessor->processOverLine($data),
             'space_before_class' => $data['space_before_class'],
             'space_after_class' => $data['space_after_class'],
+            // columns are deprecated since 4.0.0-RC1 and would be remove in 5.0.0
             'columns' => [
                 'small' => $this->getColumnValue($data['imagecols'], 1),
                 'medium' => $this->getColumnValue($data['tx_starter_imagecols_medium']),
                 'large' => $this->getColumnValue($data['tx_starter_imagecols_large']),
             ],
+            'imagecols' => $this->getColumnValue($data['imagecols'], 1),
+            'tx_starter_imagecols_medium' => $this->getColumnValue($data['tx_starter_imagecols_medium'], 1),
+            'tx_starter_imagecols_large' => $this->getColumnValue($data['tx_starter_imagecols_large'], 1),
             'items' => $this->renderGalleryItems($data),
             'tx_starter_visibility' => $data['tx_starter_visibility'],
             'tx_starter_background_fluid' => (bool) $data['tx_starter_background_fluid'],
+            'tx_starter_container' => $data['tx_starter_width'],
         ];
     }
 
+    /**
+     * @deprecated since 4.0.0 and would be remove in 5.0.0
+     */
     protected function getHeader(array $data): array
     {
         return [
@@ -92,11 +102,15 @@ class StarterCeMediaProcessor implements PtiDataProcessor
     protected function renderGalleryItems(array $data): array
     {
         $resultMedia = [];
+        $imageConfig = $this->configuration['imageConfig'] ?? [];
+        $imagePlaceholderConfig = $this->configuration['imageConfigPlaceholder'] ?? [];
+
         $mediaElements = $this->mediaProcessor->renderMedia(
             $data,
             'tt_content',
             'assets',
-            $this->configuration['imageConfig']
+            $imageConfig,
+            $imagePlaceholderConfig
         );
 
         foreach ($mediaElements as $index => $mediaElement) {
@@ -110,6 +124,8 @@ class StarterCeMediaProcessor implements PtiDataProcessor
             if ($mediaElement['type'] == 'image') {
                 $resultMedia[$index]['image'] = $mediaElement['image'];
                 $resultMedia[$index]['image']['uid'] = $mediaElement['uid'];
+                $resultMedia[$index]['image']['placeholder'] =
+                    isset($mediaElement['thumbnail']) ? $mediaElement['thumbnail']['default'] : null;
             } else {
                 $resultMedia[$index]['video'] = $mediaElement['video'];
                 $resultMedia[$index]['video']['uid'] = $mediaElement['uid'];
