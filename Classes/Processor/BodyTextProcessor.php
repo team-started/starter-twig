@@ -14,7 +14,7 @@ class BodyTextProcessor
     /**
      * @var string
      */
-    const DEFAULT_DATA_FIELD_NAME = 'bodytext';
+    public const DEFAULT_DATA_FIELD_NAME = 'bodytext';
 
     /**
      * @var RichtextProcessor

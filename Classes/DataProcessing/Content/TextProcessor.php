@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
+use Psr\Log\LoggerInterface;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use StarterTeam\StarterTwig\Processor\BodyTextProcessor;
 use StarterTeam\StarterTwig\Processor\CtaProcessor;
@@ -42,7 +43,7 @@ class TextProcessor implements PtiDataProcessor
     protected $ctaProcessor;
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     protected $logger;
 
@@ -57,7 +58,7 @@ class TextProcessor implements PtiDataProcessor
         $this->headlineProcessor = $headlineProcessor;
         $this->bodyTextProcessor = $bodyTextProcessor;
         $this->ctaProcessor = $ctaProcessor;
-        $this->logger = $logManager->getLogger(__CLASS__);
+        $this->logger = $logManager->getLogger(self::class);
     }
 
     public function process(array $data, array $configuration): ?array

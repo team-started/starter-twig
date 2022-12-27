@@ -14,12 +14,12 @@ class CtaProcessor
     /**
      * @var string
      */
-    const CTA_LINK_FIELD = 'tx_starter_ctalink';
+    public const CTA_LINK_FIELD = 'tx_starter_ctalink';
 
     /**
      * @var string
      */
-    const CTA_LINKTEXT_FIELD = 'tx_starter_ctalink_text';
+    public const CTA_LINKTEXT_FIELD = 'tx_starter_ctalink_text';
 
     /**
      * @var TypoLinkStringProcessor

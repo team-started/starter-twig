@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
+use Psr\Log\LoggerInterface;
 use PrototypeIntegration\PrototypeIntegration\Processor\MediaProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use StarterTeam\StarterTwig\Processor\BodyTextProcessor;
@@ -22,22 +23,22 @@ class StarterAccordionProcessor implements PtiDataProcessor
     /**
      * @var string
      */
-    const ACCORDION_TABLE = 'tx_starter_accordion_element';
+    public const ACCORDION_TABLE = 'tx_starter_accordion_element';
 
     /**
      * @var string
      */
-    const ACCORDION_REFERENCE_FIELD = 'tt_content_accordion';
+    public const ACCORDION_REFERENCE_FIELD = 'tt_content_accordion';
 
     /**
      * @var int
      */
-    const ACCORDION_TYPE_TEXT = 1;
+    public const ACCORDION_TYPE_TEXT = 1;
 
     /**
      * @var int
      */
-    const ACCORDION_TYPE_IMAGE = 0;
+    public const ACCORDION_TYPE_IMAGE = 0;
 
     /**
      * @var array
@@ -65,7 +66,7 @@ class StarterAccordionProcessor implements PtiDataProcessor
     protected $mediaProcessor;
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     protected $logger;
 
@@ -85,7 +86,7 @@ class StarterAccordionProcessor implements PtiDataProcessor
         $this->headlineProcessor = $headlineProcessor;
         $this->bodyTextProcessor = $bodyTextProcessor;
         $this->mediaProcessor = $mediaProcessor;
-        $this->logger = $logManager->getLogger(__CLASS__);
+        $this->logger = $logManager->getLogger(self::class);
     }
 
     public function process(array $data, array $configuration): ?array

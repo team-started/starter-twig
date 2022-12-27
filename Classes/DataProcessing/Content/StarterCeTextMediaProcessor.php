@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
+use Psr\Log\LoggerInterface;
 use PrototypeIntegration\PrototypeIntegration\Processor\MediaProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use StarterTeam\StarterTwig\Processor\BodyTextProcessor;
@@ -50,7 +51,7 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
     protected $mediaProcessor;
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     protected $logger;
 
@@ -67,7 +68,7 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
         $this->bodyTextProcessor = $bodyTextProcessor;
         $this->ctaProcessor = $ctaProcessor;
         $this->mediaProcessor = $mediaProcessor;
-        $this->logger = $logManager->getLogger(__CLASS__);
+        $this->logger = $logManager->getLogger(self::class);
     }
 
     public function process(array $data, array $configuration): ?array
