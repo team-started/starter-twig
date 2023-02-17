@@ -97,11 +97,10 @@ trait AssetTrait
     protected function getColumnSize($value, int $columnBase = 12, bool $calculateWithColumnBase = false): int
     {
         $value = (int)$value;
+        $size = $value == 0 ? $columnBase : $value;
 
-        $size = $value ?? $columnBase;
-
-        if ($calculateWithColumnBase) {
-            $size = $value ?? $columnBase - $value;
+        if ($calculateWithColumnBase && $value > 0) {
+            $size = $columnBase - $value;
         }
 
         return $size;

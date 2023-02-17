@@ -13,19 +13,10 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class HeaderProcessor implements PtiDataProcessor
 {
-    /**
-     * @var array
-     */
     protected array $configuration = [];
 
-    /**
-     * @var ContentObjectRenderer
-     */
     protected ContentObjectRenderer $contentObject;
 
-    /**
-     * @var HeadlineProcessor
-     */
     protected HeadlineProcessor $headlineProcessor;
 
     public function __construct(
