@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
-use Psr\Log\LoggerInterface;
 use PrototypeIntegration\PrototypeIntegration\Processor\MediaProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
+use Psr\Log\LoggerInterface;
 use StarterTeam\StarterTwig\Processor\BodyTextProcessor;
 use StarterTeam\StarterTwig\Processor\HeadlineProcessor;
 use TYPO3\CMS\Core\Log\LogManagerInterface;
@@ -40,40 +40,19 @@ class StarterAccordionProcessor implements PtiDataProcessor
      */
     public const ACCORDION_TYPE_IMAGE = 0;
 
-    /**
-     * @var array
-     */
-    protected $configuration = [];
+    protected array $configuration = [];
 
-    /**
-     * @var ContentObjectRenderer
-     */
-    protected $contentObject;
+    protected ContentObjectRenderer $contentObject;
 
-    /**
-     * @var HeadlineProcessor
-     */
-    protected $headlineProcessor;
+    protected HeadlineProcessor $headlineProcessor;
 
-    /**
-     * @var BodyTextProcessor
-     */
-    protected $bodyTextProcessor;
+    protected BodyTextProcessor $bodyTextProcessor;
 
-    /**
-     * @var MediaProcessor
-     */
-    protected $mediaProcessor;
+    protected MediaProcessor $mediaProcessor;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    protected LoggerInterface $logger;
 
-    /**
-     * @var array|null
-     */
-    protected array $assetFields;
+    protected ?array $assetFields = null;
 
     public function __construct(
         ContentObjectRenderer $contentObjectRenderer,
@@ -96,11 +75,11 @@ class StarterAccordionProcessor implements PtiDataProcessor
 
         $accordionItems = $this->getAccordionItems($data);
 
-        if (count($accordionItems) < 0) {
+        if (count($accordionItems) <= 0) {
             $message = sprintf(
                 'Could not render accordion with UID %s too few accordion items (%s), min (%s) items required',
                 $data['uid'],
-                count($accordionItems),
+                0,
                 1
             );
             $this->logger->warning($message);
@@ -118,16 +97,21 @@ class StarterAccordionProcessor implements PtiDataProcessor
             'space_after_class' => $data['space_after_class'],
             'items' => $this->renderAccordionItems($accordionItems),
             'tx_starter_visibility' => $data['tx_starter_visibility'],
-            'tx_starter_background_fluid' => (bool) $data['tx_starter_background_fluid'],
+            'tx_starter_background_fluid' => (bool)$data['tx_starter_background_fluid'],
             'tx_starter_container' => $data['tx_starter_width'],
         ];
     }
 
     /**
-     * @deprecated since 4.0.0 and would be remove in 5.0.0
+     * @deprecated since 4.0.0 and would be remove in 5.0.0, use HeadlineProcessor:class instead
      */
     protected function getHeader(array $data): array
     {
+        trigger_error(
+            __FUNCTION__ . ' will be removed in EXT:starter-twig v5.0.0, use HeadlineProcessor:class instead.',
+            E_USER_DEPRECATED
+        );
+
         return [
             'headline' => $this->headlineProcessor->processHeadline($data),
             'subline' => $this->headlineProcessor->processSubLine($data),
@@ -151,7 +135,7 @@ class StarterAccordionProcessor implements PtiDataProcessor
     }
 
     /**
-     * Convert a accordion item record to the accordion item required by the view.
+     * Convert an accordion item record to the accordion item required by the view.
      */
     protected function translateSliderItem(array $accordionItem): array
     {

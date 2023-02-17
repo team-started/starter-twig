@@ -13,28 +13,28 @@ trait AssetTrait
         0 => [
             'x' => 'center',
             'y' => 'above',
-            'inside' => true
+            'inside' => true,
         ],
         8 => [
             'x' => 'center',
             'y' => 'below',
-            'inside' => true
+            'inside' => true,
         ],
         17 => [
             'x' => 'right',
-            'inside' => true
+            'inside' => true,
         ],
         18 => [
             'x' => 'left',
-            'inside' => true
+            'inside' => true,
         ],
         25 => [
             'x' => 'right',
-            'inside' => false
+            'inside' => false,
         ],
         26 => [
             'x' => 'left',
-            'inside' => false
+            'inside' => false,
         ],
     ];
 
@@ -47,7 +47,7 @@ trait AssetTrait
         17 => 'position-left-right',
         18 => 'position-left-right',
         25 => 'position-left-right',
-        26 => 'position-left-right'
+        26 => 'position-left-right',
     ];
 
     protected function getGrid(array $data, ?array &$mediaItems): array
@@ -80,7 +80,7 @@ trait AssetTrait
                 'small' => $this->getColumnSize($data['tx_starter_media_size_small'], 12, true),
                 'medium' => $this->getColumnSize($data['tx_starter_media_size_medium'], 12, true),
                 'large' => $this->getColumnSize($data['tx_starter_media_size_large'], 12, true),
-            ]
+            ],
         ];
 
         unset($items['tx_starter_show_small']);
@@ -91,7 +91,6 @@ trait AssetTrait
     }
 
     /**
-     *
      * @param int|string $value
      */
     protected function getColumnSize($value, int $columnBase = 12, bool $calculateWithColumnBase = false): int

@@ -50,7 +50,7 @@ class FractalAliasLoader extends FilesystemLoader
      * @return string|null The template name or null
      * @throws LoaderError
      */
-    protected function findTemplate(string $name, bool $throw = true)
+    protected function findTemplate(string $name, bool $throw = true): ?string
     {
         if (isset($this->cache[$name])) {
             return $this->cache[$name];
@@ -58,7 +58,7 @@ class FractalAliasLoader extends FilesystemLoader
 
         if (isset($this->errorCache[$name])) {
             if (!$throw) {
-                return false;
+                return null;
             }
 
             throw new LoaderError($this->errorCache[$name]);
@@ -71,7 +71,7 @@ class FractalAliasLoader extends FilesystemLoader
 
         $this->errorCache[$name] = \sprintf('Unable to find template "%s".', $name);
         if (!$throw) {
-            return false;
+            return null;
         }
 
         throw new LoaderError($this->errorCache[$name]);
@@ -109,6 +109,11 @@ class FractalAliasLoader extends FilesystemLoader
 
         if (empty($this->templatePath)) {
             $templatePath = $this->getConfigurationWithKey('rootTemplatePath');
+            if (is_null($templatePath)) {
+                $this->errorCache[$this->templatePath] = 'There was no template path found under configuration key "rootTemplatePath" for FractalAliasLoader.';
+                throw new LoaderError($this->errorCache[$this->templatePath]);
+            }
+
             $this->templatePath = GeneralUtility::getFileAbsFileName($templatePath);
         }
 
@@ -146,7 +151,7 @@ class FractalAliasLoader extends FilesystemLoader
     }
 
     /**
-     * @return null|mixed
+     * @return array|string|null
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */

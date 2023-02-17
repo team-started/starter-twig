@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
-use Psr\Log\LoggerInterface;
 use PrototypeIntegration\PrototypeIntegration\Processor\MediaProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
+use Psr\Log\LoggerInterface;
 use StarterTeam\StarterTwig\Processor\BodyTextProcessor;
 use StarterTeam\StarterTwig\Processor\CtaProcessor;
 use StarterTeam\StarterTwig\Processor\HeadlineProcessor;
@@ -20,40 +20,19 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
 {
     use AssetTrait;
 
-    /**
-     * @var array
-     */
-    protected $configuration = [];
+    protected array $configuration = [];
 
-    /**
-     * @var ContentObjectRenderer
-     */
-    protected $contentObject;
+    protected ContentObjectRenderer $contentObject;
 
-    /**
-     * @var HeadlineProcessor
-     */
-    protected $headlineProcessor;
+    protected HeadlineProcessor $headlineProcessor;
 
-    /**
-     * @var BodyTextProcessor
-     */
-    protected $bodyTextProcessor;
+    protected BodyTextProcessor $bodyTextProcessor;
 
-    /**
-     * @var CtaProcessor
-     */
-    protected $ctaProcessor;
+    protected CtaProcessor $ctaProcessor;
 
-    /**
-     * @var MediaProcessor
-     */
-    protected $mediaProcessor;
+    protected MediaProcessor $mediaProcessor;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     public function __construct(
         ContentObjectRenderer $contentObjectRenderer,
@@ -89,7 +68,7 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
             'tx_starter_cta' => $this->ctaProcessor->processCta($data),
             'tx_starter_visibility' => $data['tx_starter_visibility'],
             'tx_starter_backgroundcolor' => $data['tx_starter_backgroundcolor'],
-            'tx_starter_background_fluid' => (bool) $data['tx_starter_background_fluid'],
+            'tx_starter_background_fluid' => (bool)$data['tx_starter_background_fluid'],
             'tx_starter_container' => $data['tx_starter_width'],
             'grid' => $this->getGrid($data, $mediaItems),
         ];
@@ -98,10 +77,15 @@ class StarterCeTextMediaProcessor implements PtiDataProcessor
     }
 
     /**
-     * @deprecated since 4.0.0 and would be remove in 5.0.0
+     * @deprecated since 4.0.0 and would be remove in 5.0.0, use HeadlineProcessor:class instead
      */
     protected function getHeader(array $data): array
     {
+        trigger_error(
+            __FUNCTION__ . ' will be removed in EXT:starter-twig v5.0.0, use HeadlineProcessor:class instead.',
+            E_USER_DEPRECATED
+        );
+
         return [
             'headline' => $this->headlineProcessor->processHeadline($data),
             'subline' => $this->headlineProcessor->processSubLine($data),

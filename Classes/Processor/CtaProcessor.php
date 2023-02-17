@@ -21,10 +21,7 @@ class CtaProcessor
      */
     public const CTA_LINKTEXT_FIELD = 'tx_starter_ctalink_text';
 
-    /**
-     * @var TypoLinkStringProcessor
-     */
-    protected $linkProcessor;
+    protected TypoLinkStringProcessor $linkProcessor;
 
     public function __construct(TypoLinkStringProcessor $typoLinkStringProcessor)
     {

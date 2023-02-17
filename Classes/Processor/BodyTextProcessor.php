@@ -16,14 +16,11 @@ class BodyTextProcessor
      */
     public const DEFAULT_DATA_FIELD_NAME = 'bodytext';
 
-    /**
-     * @var RichtextProcessor
-     */
-    protected $rteProcessor;
+    protected RichtextProcessor $rteProcessor;
 
-    public function __construct(RichtextProcessor $richtextProcessor)
+    public function __construct(RichtextProcessor $richTextProcessor)
     {
-        $this->rteProcessor = $richtextProcessor;
+        $this->rteProcessor = $richTextProcessor;
     }
 
     public function processBodyText(array $data, string $dataField = self::DEFAULT_DATA_FIELD_NAME): string

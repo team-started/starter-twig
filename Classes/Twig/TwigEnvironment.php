@@ -113,7 +113,7 @@ class TwigEnvironment extends Environment implements SingletonInterface
     }
 
     /**
-     * @return null|mixed
+     * @return mixed|null
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */

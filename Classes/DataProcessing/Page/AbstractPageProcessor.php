@@ -6,7 +6,6 @@ namespace StarterTeam\StarterTwig\DataProcessing\Page;
 
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
@@ -15,38 +14,26 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 abstract class AbstractPageProcessor
 {
-    /**
-     * The content object to render.
-     * @var ContentObjectRenderer
-     */
-    protected $cObj;
+    protected array $conf = [];
 
-    /**
-     * @var array
-     */
-    protected $conf = [];
+    protected ContentObjectRenderer $cObj;
 
-    /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
+    protected TypoScriptService $typoScriptService;
 
-    /**
-     * @var TypoScriptService
-     */
-    protected $typoScriptService;
+    protected Context $context;
 
-    /**
-     * @var Context
-     */
-    protected $context;
+    protected ObjectManager $objectManager;
 
-    public function __construct()
-    {
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->typoScriptService = $this->objectManager->get(TypoScriptService::class);
-        $this->context = $this->objectManager->get(Context::class);
-        $this->cObj = $this->objectManager->get(ContentObjectRenderer::class);
+    public function __construct(
+        ContentObjectRenderer $cObj,
+        TypoScriptService $typoScriptService,
+        Context $context,
+        ObjectManager $objectManager
+    ) {
+        $this->cObj = $cObj;
+        $this->typoScriptService = $typoScriptService;
+        $this->context = $context;
+        $this->objectManager = $objectManager;
     }
 
     public function setContentObjectRenderer(ContentObjectRenderer $cObj): void

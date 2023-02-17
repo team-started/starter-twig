@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
-use Psr\Log\LoggerInterface;
 use PrototypeIntegration\PrototypeIntegration\Processor\MediaProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\TypoLinkStringProcessor;
+use Psr\Log\LoggerInterface;
 use StarterTeam\StarterTwig\Processor\HeadlineProcessor;
 use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -17,35 +17,17 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class StarterCeMediaProcessor implements PtiDataProcessor
 {
-    /**
-     * @var array
-     */
-    protected $configuration = [];
+    protected array $configuration = [];
 
-    /**
-     * @var ContentObjectRenderer
-     */
-    protected $contentObject;
+    protected ContentObjectRenderer $contentObject;
 
-    /**
-     * @var HeadlineProcessor
-     */
-    protected $headlineProcessor;
+    protected HeadlineProcessor $headlineProcessor;
 
-    /**
-     * @var MediaProcessor
-     */
-    protected $mediaProcessor;
+    protected MediaProcessor $mediaProcessor;
 
-    /**
-     * @var TypoLinkStringProcessor
-     */
-    protected $typoLinkProcessor;
+    protected TypoLinkStringProcessor $typoLinkProcessor;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     public function __construct(
         ContentObjectRenderer $contentObjectRenderer,
@@ -84,16 +66,21 @@ class StarterCeMediaProcessor implements PtiDataProcessor
             'tx_starter_imagecols_large' => $this->getColumnValue($data['tx_starter_imagecols_large'], 1),
             'items' => $this->renderGalleryItems($data),
             'tx_starter_visibility' => $data['tx_starter_visibility'],
-            'tx_starter_background_fluid' => (bool) $data['tx_starter_background_fluid'],
+            'tx_starter_background_fluid' => (bool)$data['tx_starter_background_fluid'],
             'tx_starter_container' => $data['tx_starter_width'],
         ];
     }
 
     /**
-     * @deprecated since 4.0.0 and would be remove in 5.0.0
+     * @deprecated since 4.0.0 and would be remove in 5.0.0, use HeadlineProcessor:class instead
      */
     protected function getHeader(array $data): array
     {
+        trigger_error(
+            __FUNCTION__ . ' will be removed in EXT:starter-twig v5.0.0, use HeadlineProcessor:class instead.',
+            E_USER_DEPRECATED
+        );
+
         return [
             'headline' => $this->headlineProcessor->processHeadline($data),
             'subline' => $this->headlineProcessor->processSubLine($data),

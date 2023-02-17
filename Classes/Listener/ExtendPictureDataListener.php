@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace StarterTeam\StarterTwig\Listener;
 
 use PrototypeIntegration\PrototypeIntegration\Processor\Event\PictureProcessorRenderedEvent;
@@ -9,7 +11,7 @@ use PrototypeIntegration\PrototypeIntegration\Processor\Event\PictureProcessorRe
  */
 class ExtendPictureDataListener
 {
-    protected $displayInformation = [
+    protected array $displayInformation = [
         'tx_starter_show_small' => true,
         'tx_starter_show_medium' => true,
         'tx_starter_show_large' => true,
@@ -24,7 +26,7 @@ class ExtendPictureDataListener
         $asset = $event->getImage();
         $assetOptions = $this->displayInformation;
 
-        foreach ($this->displayInformation as $property => $value) {
+        foreach (array_keys($this->displayInformation) as $property) {
             if ($asset->hasProperty($property)) {
                 $assetOptions[$property] = !(bool)$asset->getProperty($property);
             }
