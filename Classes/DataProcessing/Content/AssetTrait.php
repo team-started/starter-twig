@@ -54,11 +54,11 @@ trait AssetTrait
     {
         $items = null;
 
-        if ($mediaItems['image']) {
+        if ($mediaItems['image'] ?? false) {
             $items = &$mediaItems['image'];
         }
 
-        if ($mediaItems['video']) {
+        if ($mediaItems['video'] ?? false) {
             $items = &$mediaItems['video'];
         }
 

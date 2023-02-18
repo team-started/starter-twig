@@ -20,7 +20,7 @@ class ExtendPictureDataListener
     /**
      * Add display information for breakpoints to picture
      */
-    public function addDisplayInformationForPictureData(PictureProcessorRenderedEvent $event)
+    public function addDisplayInformationForPictureData(PictureProcessorRenderedEvent $event): void
     {
         $result = $event->getResult();
         $asset = $event->getImage();

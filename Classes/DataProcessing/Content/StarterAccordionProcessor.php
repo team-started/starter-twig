@@ -167,8 +167,8 @@ class StarterAccordionProcessor implements PtiDataProcessor
     {
         $resultMedia = null;
 
-        if ((int)$accordionItem['type'] === self::ACCORDION_TYPE_TEXT) {
-            return $resultMedia;
+        if ((int)$accordionItem['type'] === self::ACCORDION_TYPE_TEXT || is_null($this->assetFields)) {
+            return null;
         }
 
         foreach ($this->assetFields as $assetField) {

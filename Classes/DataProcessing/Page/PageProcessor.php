@@ -14,9 +14,6 @@ class PageProcessor extends AbstractPageProcessor implements PtiDataProcessor, P
 {
     use MenuProcessorTrait;
 
-    /**
-     * @return array[]|null
-     */
     public function process(array $data, array $configuration = []): ?array
     {
         $this->conf = $configuration;

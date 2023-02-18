@@ -18,24 +18,30 @@ class Typo3Loader implements LoaderInterface
 
     protected array $errorCache = [];
 
-    public function getSourceContext($name): Source
+    public function getSourceContext(string $name): Source
     {
         $path = $this->findTemplate($name);
+        $content = file_get_contents($path);
 
-        return new Source(\file_get_contents($path), $name, $path);
+        if (is_bool($content)) {
+            $this->errorCache[$name] = sprintf('Unable to get content of template "%s" in path "%s".', $name, $path);
+            throw new LoaderError($this->errorCache[$name]);
+        }
+
+        return new Source($content, $name, $path);
     }
 
-    public function getCacheKey($name): string
+    public function getCacheKey(string $name): string
     {
         return $name;
     }
 
-    public function isFresh($name, $time): bool
+    public function isFresh(string $name, int $time): bool
     {
         return \filemtime($this->findTemplate($name)) <= $time;
     }
 
-    public function exists($name): bool
+    public function exists(string $name): bool
     {
         if (isset($this->cache[$name])) {
             return true;
@@ -52,7 +58,7 @@ class Typo3Loader implements LoaderInterface
     /**
      * Checks if the template can be found.
      *
-     * @return false|string The template name or false
+     * @return string The template name or false
      * @throws LoaderError
      */
     public function findTemplate(string $name): string

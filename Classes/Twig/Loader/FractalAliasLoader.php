@@ -23,7 +23,7 @@ class FractalAliasLoader extends FilesystemLoader
 {
     private ?string $templatePath = null;
 
-    private ?array $configuration = null;
+    private array $configuration = [];
 
     private array $aliases = [];
 
@@ -77,6 +77,9 @@ class FractalAliasLoader extends FilesystemLoader
         throw new LoaderError($this->errorCache[$name]);
     }
 
+    /**
+     * @return false|string
+     */
     private function resolveAlias(string $name)
     {
         if (array_key_exists($name, $this->aliases)) {
@@ -90,10 +93,19 @@ class FractalAliasLoader extends FilesystemLoader
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    private function loadConfiguration()
+    private function loadConfiguration(): void
     {
-        $this->configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+        $configuration = [];
+        $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
             ->get('starter_twig');
+
+        if (!is_array($extensionConfiguration)) {
+            $configuration[] = $extensionConfiguration;
+        } else {
+            $configuration = $extensionConfiguration;
+        }
+
+        $this->configuration = $configuration;
     }
 
     /**
@@ -101,7 +113,7 @@ class FractalAliasLoader extends FilesystemLoader
      * @throws ExtensionConfigurationPathDoesNotExistException
      * @throws LoaderError
      */
-    private function setTemplatePath(?string $templateRootPath)
+    private function setTemplatePath(?string $templateRootPath): void
     {
         if ($templateRootPath) {
             $this->templatePath = GeneralUtility::getFileAbsFileName($templateRootPath);
@@ -111,6 +123,11 @@ class FractalAliasLoader extends FilesystemLoader
             $templatePath = $this->getConfigurationWithKey('rootTemplatePath');
             if (is_null($templatePath)) {
                 $this->errorCache[$this->templatePath] = 'There was no template path found under configuration key "rootTemplatePath" for FractalAliasLoader.';
+                throw new LoaderError($this->errorCache[$this->templatePath]);
+            }
+
+            if (is_array($templatePath)) {
+                $this->errorCache[$this->templatePath] = 'Template path expects string value, array given for configuration key "rootTemplatePath" for FractalAliasLoader.';
                 throw new LoaderError($this->errorCache[$this->templatePath]);
             }
 
@@ -127,7 +144,7 @@ class FractalAliasLoader extends FilesystemLoader
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    private function setAlias()
+    private function setAlias(): void
     {
         foreach ($this->paths as $path) {
             $finder = new Finder();
@@ -157,7 +174,7 @@ class FractalAliasLoader extends FilesystemLoader
      */
     private function getConfigurationWithKey(string $key)
     {
-        if (is_null($this->configuration)) {
+        if ($this->configuration === []) {
             $this->loadConfiguration();
         }
 

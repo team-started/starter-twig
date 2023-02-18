@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\Twig;
 
+use Exception;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\FilesystemLoader;
-use Twig\Loader\LoaderInterface;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class TwigEnvironment extends Environment implements SingletonInterface
 {
-    protected ?array $configuration = [];
+    protected array $configuration = [];
 
     /**
      * @throws ExtensionConfigurationExtensionNotConfiguredException
@@ -53,12 +53,12 @@ class TwigEnvironment extends Environment implements SingletonInterface
         return \TYPO3\CMS\Core\Core\Environment::getVarPath() . '/cache/code/twig/';
     }
 
-    /**
-     * @return LoaderInterface[]
-     */
     protected function getAdditionalLoaders(): array
     {
-        $loaderClasses = $this->configuration['loader'] ?: [];
+        $loaderClasses = $this->configuration['loader'] ?? [];
+        if ($loaderClasses === []) {
+            return [];
+        }
 
         return array_map(fn (string $loaderClass) => GeneralUtility::makeInstance($loaderClass), $loaderClasses);
     }
@@ -66,10 +66,16 @@ class TwigEnvironment extends Environment implements SingletonInterface
     /**
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
+     * @throws Exception
      */
     protected function getNamespaces(): array
     {
         $namespaces = $this->getConfigurationWithKey('namespaces');
+
+        if (!is_array($namespaces)) {
+            throw new Exception('Namespaces must configured as array', 1_676_655_866);
+        }
+
         return array_map(
             '\TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName',
             $namespaces
@@ -113,13 +119,13 @@ class TwigEnvironment extends Environment implements SingletonInterface
     }
 
     /**
-     * @return mixed|null
+     * @return array|string|null
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */
     private function getConfigurationWithKey(string $key)
     {
-        if (is_null($this->configuration)) {
+        if ($this->configuration === []) {
             $this->loadConfiguration();
         }
 
@@ -134,9 +140,18 @@ class TwigEnvironment extends Environment implements SingletonInterface
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    private function loadConfiguration()
+    private function loadConfiguration(): void
     {
-        $this->configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+        $configuration = [];
+        $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
             ->get('starter_twig');
+
+        if (!is_array($extensionConfiguration)) {
+            $configuration[] = $extensionConfiguration;
+        } else {
+            $configuration = $extensionConfiguration;
+        }
+
+        $this->configuration = $configuration;
     }
 }
