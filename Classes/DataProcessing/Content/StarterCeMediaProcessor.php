@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
-use PrototypeIntegration\PrototypeIntegration\Processor\MediaProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\TypoLinkStringProcessor;
 use Psr\Log\LoggerInterface;
 use StarterTeam\StarterTwig\Processor\HeadlineProcessor;
+use StarterTeam\StarterTwig\Service\RenderMediaService;
 use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
@@ -23,7 +23,7 @@ class StarterCeMediaProcessor implements PtiDataProcessor
 
     protected HeadlineProcessor $headlineProcessor;
 
-    protected MediaProcessor $mediaProcessor;
+    protected RenderMediaService $renderMediaService;
 
     protected TypoLinkStringProcessor $typoLinkProcessor;
 
@@ -32,13 +32,13 @@ class StarterCeMediaProcessor implements PtiDataProcessor
     public function __construct(
         ContentObjectRenderer $contentObjectRenderer,
         HeadlineProcessor $headlineProcessor,
-        MediaProcessor $mediaProcessor,
+        RenderMediaService $renderMediaService,
         TypoLinkStringProcessor $typoLinkStringProcessor,
         LogManagerInterface $logManager
     ) {
         $this->contentObject = $contentObjectRenderer;
         $this->headlineProcessor = $headlineProcessor;
-        $this->mediaProcessor = $mediaProcessor;
+        $this->renderMediaService = $renderMediaService;
         $this->typoLinkProcessor = $typoLinkStringProcessor;
         $this->logger = $logManager->getLogger(self::class);
     }
@@ -93,7 +93,7 @@ class StarterCeMediaProcessor implements PtiDataProcessor
         $imageConfig = $this->configuration['imageConfig'] ?? [];
         $imagePlaceholderConfig = $this->configuration['imageConfigPlaceholder'] ?? [];
 
-        $mediaElements = $this->mediaProcessor->renderMedia(
+        $mediaElements = $this->renderMediaService->processMedia(
             $data,
             'tt_content',
             'assets',

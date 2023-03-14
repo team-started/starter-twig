@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
-use PrototypeIntegration\PrototypeIntegration\Processor\MediaProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use Psr\Log\LoggerInterface;
 use StarterTeam\StarterTwig\Processor\BodyTextProcessor;
 use StarterTeam\StarterTwig\Processor\HeadlineProcessor;
+use StarterTeam\StarterTwig\Service\RenderMediaService;
 use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -48,7 +48,7 @@ class StarterAccordionProcessor implements PtiDataProcessor
 
     protected BodyTextProcessor $bodyTextProcessor;
 
-    protected MediaProcessor $mediaProcessor;
+    protected RenderMediaService $renderMediaService;
 
     protected LoggerInterface $logger;
 
@@ -58,13 +58,13 @@ class StarterAccordionProcessor implements PtiDataProcessor
         ContentObjectRenderer $contentObjectRenderer,
         HeadlineProcessor $headlineProcessor,
         BodyTextProcessor $bodyTextProcessor,
-        MediaProcessor $mediaProcessor,
+        RenderMediaService $renderMediaService,
         LogManagerInterface $logManager
     ) {
         $this->contentObject = $contentObjectRenderer;
         $this->headlineProcessor = $headlineProcessor;
         $this->bodyTextProcessor = $bodyTextProcessor;
-        $this->mediaProcessor = $mediaProcessor;
+        $this->renderMediaService = $renderMediaService;
         $this->logger = $logManager->getLogger(self::class);
     }
 
@@ -186,7 +186,7 @@ class StarterAccordionProcessor implements PtiDataProcessor
             $imageConfig = $this->configuration['imageConfig'][$assetField] ?? [];
             $imagePlaceholderConfig = $this->configuration['imageConfigPlaceholder'][$assetField] ?? [];
 
-            $mediaFileData = $this->mediaProcessor->renderMedia(
+            $mediaFileData = $this->renderMediaService->processMedia(
                 $accordionItem,
                 self::ACCORDION_TABLE,
                 $assetField,
