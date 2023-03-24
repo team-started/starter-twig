@@ -3,4 +3,18 @@ tx_startertwig {
   ceFolderName = 5-contentelements
   componentFolderName = 4-components
   objectsFolderName = 3-objects
+
+  // date formatting
+  dateFormats {
+    // for other formats see https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax
+    dateFormat = dd.MM.Y
+
+    calendarFormat {
+      day = d
+      dayOfWeek = E
+      month = LL
+      monthOfYear = LLL
+      year = Y
+    }
+  }
 }
