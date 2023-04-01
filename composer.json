@@ -14,19 +14,19 @@
         "pti/pti": "dev-feature/support_t3v11 || dev-master",
         "twig/twig": "^3",
         "typo3/cms-core": "^11.5",
-        "starterteam/starter": "dev-main"
+        "starterteam/starter": "^4.0 || 4.1-dev"
     },
-	"suggest": {
-		"starterteam/starter-twig-news": "4.x-dev"
-	},
-	"autoload": {
+    "suggest": {
+        "starterteam/starter-twig-news": "^4.0 || 4.1-dev"
+    },
+    "autoload": {
         "psr-4": {
             "StarterTeam\\StarterTwig\\": "Classes"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "4.x-dev"
+            "dev-main": "4.1-dev"
         },
         "typo3/cms": {
             "extension-key": "starter_twig"
