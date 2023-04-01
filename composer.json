@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "php": "^7.4",
-        "pti/pti": "dev-feature/support_t3v11",
+        "php": "^7.4 || ^8.1",
+        "pti/pti": "dev-feature/support_t3v11 || dev-master",
         "twig/twig": "^3",
         "typo3/cms-core": "^11.5",
         "starterteam/starter": "dev-main"
