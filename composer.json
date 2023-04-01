@@ -14,10 +14,10 @@
         "pti/pti": "dev-feature/support_t3v11 || dev-master",
         "twig/twig": "^3",
         "typo3/cms-core": "^11.5",
-        "starterteam/starter": "^4.1 || 4.x-dev"
+        "starterteam/starter": "dev-main"
     },
 	"suggest": {
-		"starterteam/starter-twig-news": "^4.1 || 4.x-dev"
+		"starterteam/starter-twig-news": "4.x-dev"
 	},
 	"autoload": {
         "psr-4": {
