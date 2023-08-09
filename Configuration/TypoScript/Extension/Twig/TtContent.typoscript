@@ -6,6 +6,7 @@ lib.twigContentElement {
 }
 
 @import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/Div.typoscript'
+@import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/StarterDownload.typoscript'
 @import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/Header.typoscript'
 @import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/Text.typoscript'
 @import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/ContentElement/StarterAccordion.typoscript'

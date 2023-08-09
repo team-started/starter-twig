@@ -1,0 +1,29 @@
+# Starter Download Element:
+#
+# CType: starter_download
+
+tt_content.starter_download =< lib.twigContentElement
+tt_content.starter_download {
+  templateName = {$tx_startertwig.ceFolderName}/m27-download/m27-download.twig
+
+  dataProcessors {
+    10 = StarterTeam\StarterTwig\DataProcessing\Content\StarterDownloadProcessor
+    10 {
+      metaDataDescription {
+        downloadDescriptionField = description
+        downloadDescriptionFallbackField < .downloadDescriptionField
+
+        maxCharacters = 60
+        append = ...
+        respectWordBoundaries = 1
+      }
+
+      formatSize {
+        decimals = 0
+        decimalSeparator = .
+        thousandsSeparator = ,
+        units = B,KB,MB,GB,TB,PB,EB,ZB,YB
+      }
+    }
+  }
+}
