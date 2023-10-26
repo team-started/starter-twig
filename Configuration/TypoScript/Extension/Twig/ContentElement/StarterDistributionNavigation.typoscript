@@ -1,0 +1,19 @@
+# Starter Distribution Navigation Element:
+#
+# CType: starter_distribution_navigation_download
+
+tt_content.starter_distribution_navigation =< lib.twigContentElement
+tt_content.starter_distribution_navigation {
+  templateName = {$tx_startertwig.ceFolderName}/m28-distribution-navigation/m28-distribution-navigation.twig
+
+  dataProcessors {
+    10 = StarterTeam\StarterTwig\DataProcessing\Content\StarterDistributionNavigationProcessor
+    10 {
+      headerType = 3
+
+      menuConfiguration {
+        titleField = nav_title // title
+      }
+    }
+  }
+}

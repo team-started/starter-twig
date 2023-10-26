@@ -10,10 +10,7 @@ use TYPO3\CMS\Frontend\DataProcessing\MenuProcessor;
 
 trait MenuProcessorTrait
 {
-    /**
-     * @return mixed
-     */
-    protected function getMenuFromCms(array $processorConfiguration, ContentObjectRenderer &$cObject)
+    protected function getMenuFromCms(array $processorConfiguration, ContentObjectRenderer &$cObject): array
     {
         /** @var MenuProcessor $menuDataFetcher */
         $menuDataFetcher = GeneralUtility::makeInstance(MenuProcessor::class);
