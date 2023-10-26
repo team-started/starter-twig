@@ -25,7 +25,7 @@ class BodyTextProcessor
 
     public function processBodyText(array $data, string $dataField = self::DEFAULT_DATA_FIELD_NAME): string
     {
-        if (empty($dataField)) {
+        if ($dataField === '') {
             $dataField = self::DEFAULT_DATA_FIELD_NAME;
         }
 
@@ -36,11 +36,11 @@ class BodyTextProcessor
     {
         $value = '';
 
-        if (empty($dataField)) {
+        if ($dataField === '') {
             $dataField = self::DEFAULT_DATA_FIELD_NAME;
         }
 
-        if (isset($data[$dataField]) && !empty($data[$dataField])) {
+        if (array_key_exists($dataField, $data) && $data[$dataField] !== '') {
             $value = strip_tags($data[$dataField]);
         }
 

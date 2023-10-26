@@ -105,14 +105,14 @@ class TwigEnvironment extends Environment implements SingletonInterface
     {
         $fileSystemLoader = new FilesystemLoader();
 
-        if (!empty($storagePath = $this->getTemplatePath())) {
+        $storagePath = $this->getTemplatePath();
+        if ($storagePath !== null && $storagePath !== '') {
             $fileSystemLoader->addPath($storagePath);
         }
 
-        if (!empty($namespaces = $this->getNamespaces())) {
-            foreach ($namespaces as $namespace => $path) {
-                $fileSystemLoader->addPath($path, $namespace);
-            }
+        $namespaces = $this->getNamespaces();
+        foreach ($namespaces as $namespace => $path) {
+            $fileSystemLoader->addPath($path, $namespace);
         }
 
         return $fileSystemLoader;

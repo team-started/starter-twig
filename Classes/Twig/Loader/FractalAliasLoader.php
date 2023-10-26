@@ -65,7 +65,7 @@ class FractalAliasLoader extends FilesystemLoader
         }
 
         $path = $this->resolveAlias($name);
-        if (!empty($path) && \is_file($path)) {
+        if ($path !== '' && $path !== false && \is_file($path)) {
             return $this->cache[$name] = $path;
         }
 
@@ -119,7 +119,7 @@ class FractalAliasLoader extends FilesystemLoader
             $this->templatePath = GeneralUtility::getFileAbsFileName($templateRootPath);
         }
 
-        if (empty($this->templatePath)) {
+        if ($this->templatePath === null || $this->templatePath === '') {
             $templatePath = $this->getConfigurationWithKey('rootTemplatePath');
             if (is_null($templatePath)) {
                 $this->errorCache[$this->templatePath] = 'There was no template path found under configuration key "rootTemplatePath" for FractalAliasLoader.';
@@ -134,7 +134,7 @@ class FractalAliasLoader extends FilesystemLoader
             $this->templatePath = GeneralUtility::getFileAbsFileName($templatePath);
         }
 
-        if (empty($this->templatePath)) {
+        if ($this->templatePath === '') {
             $this->errorCache[$this->templatePath] = 'There was no template path found for FractalAliasLoader.';
             throw new LoaderError($this->errorCache[$this->templatePath]);
         }

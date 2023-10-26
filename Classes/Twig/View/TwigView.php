@@ -24,7 +24,7 @@ class TwigView extends AbstractView implements ViewInterface, TemplateBasedView
 
     public function render(): string
     {
-        if (empty($this->template)) {
+        if ($this->template === '') {
             throw new \RuntimeException('Template file missing.', 1_519_205_250_412);
         }
 

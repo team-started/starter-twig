@@ -72,8 +72,7 @@ class Typo3Loader implements LoaderInterface
         }
 
         $path = GeneralUtility::getFileAbsFileName($name);
-
-        if (empty($path) || !\is_file($path)) {
+        if ($path === '' || !\is_file($path)) {
             $this->errorCache[$name] = \sprintf('unable to find template "%s".', $name);
             throw new LoaderError($this->errorCache[$name]);
         }
