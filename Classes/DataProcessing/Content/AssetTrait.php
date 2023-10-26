@@ -13,12 +13,12 @@ trait AssetTrait
         0 => [
             'x' => 'center',
             'y' => 'above',
-            'inside' => true,
+            'inside' => false,
         ],
         8 => [
             'x' => 'center',
             'y' => 'below',
-            'inside' => true,
+            'inside' => false,
         ],
         17 => [
             'x' => 'right',
