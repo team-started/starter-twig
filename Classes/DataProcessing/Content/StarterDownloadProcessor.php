@@ -23,7 +23,7 @@ class StarterDownloadProcessor implements PtiDataProcessor
 
     public const SORT_MAPPING = [
         'name' => 'title',
-        'extension' => 'fileType',
+        'type' => 'fileType',
         'size' => 'fileSize',
     ];
 
