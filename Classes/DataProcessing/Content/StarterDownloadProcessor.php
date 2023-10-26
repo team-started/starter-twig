@@ -104,7 +104,7 @@ class StarterDownloadProcessor implements PtiDataProcessor
 
             $downloadFiles[$fileIndex] = [
                 'title' => $file['link']['metaData']['name'] ?? $file['link']['config']['title'],
-                'description' => $data['filelink_size'] ? $file['link']['metaData']['description'] : '',
+                'description' => $data['uploads_description'] ? $file['link']['metaData']['description'] : '',
                 'fileType' => $file['link']['metaData']['extension'],
                 'fileSize' => $data['filelink_size'] ? $file['link']['metaData']['size'] : '',
                 'link' => [
