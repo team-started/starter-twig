@@ -29,6 +29,7 @@ class TwigView extends AbstractView implements ViewInterface, TemplateBasedView
         }
 
         try {
+            $this->moveCustomGlobalsIntoTwigEnvironment();
             return $this->twigEnvironment->render($this->template, $this->variables);
         } catch (\Exception $exception) {
             throw new \RuntimeException('Twig view error: ' . $exception->getMessage(), 1_519_205_228_169, $exception);
@@ -53,5 +54,13 @@ class TwigView extends AbstractView implements ViewInterface, TemplateBasedView
     public function setVariables(array $variables): void
     {
         $this->variables = $variables;
+    }
+
+    public function moveCustomGlobalsIntoTwigEnvironment(): void
+    {
+        if ($this->variables !== [] && array_key_exists('_globals', $this->variables)) {
+            $this->twigEnvironment->addGlobal('_globals', $this->variables['_globals']);
+            unset($this->variables['_globals']);
+        }
     }
 }
