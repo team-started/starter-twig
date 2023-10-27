@@ -14,7 +14,7 @@
         "pti/pti": "dev-feature/support_t3v11 || ^3 || dev-master",
         "twig/twig": "^3",
         "typo3/cms-core": "^11.5",
-        "starterteam/starter": "^4.3"
+        "starterteam/starter": "^4.4"
     },
     "suggest": {
         "starterteam/starter-twig-news": "Processing package for EXT:news to work with Twig templates"
@@ -24,22 +24,22 @@
             "StarterTeam\\StarterTwig\\": "Classes"
         }
     },
-	"config": {
-		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin",
-		"allow-plugins": {
-			"typo3/class-alias-loader": true,
-			"typo3/cms-composer-installers": true
-		}
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-main": "4.4-dev"
-		},
-		"typo3/cms": {
-			"extension-key": "starter_twig",
-			"app-dir": ".Build",
-			"web-dir": ".Build/public"
-		}
-	}
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin",
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "4.4-dev"
+        },
+        "typo3/cms": {
+            "extension-key": "starter_twig",
+            "app-dir": ".Build",
+            "web-dir": ".Build/public"
+        }
+    }
 }
