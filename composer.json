@@ -14,7 +14,7 @@
         "pti/pti": "dev-feature/support_t3v11 || ^3 || dev-master",
         "twig/twig": "^3",
         "typo3/cms-core": "^11.5",
-        "starterteam/starter": "^4.4"
+        "starterteam/starter": "^4.5"
     },
     "suggest": {
         "starterteam/starter-twig-news": "Processing package for EXT:news to work with Twig templates"
@@ -34,7 +34,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "4.4-dev"
+            "dev-main": "4.5-dev"
         },
         "typo3/cms": {
             "extension-key": "starter_twig",
