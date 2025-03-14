@@ -4,5 +4,5 @@
 
 #tt_content.starter_teaser =< lib.twigContentElement
 #tt_content.starter_teaser {
-#  templateName = {$tx_startertwig.ceFolderName}/ceteaser/ceteaser.twig
+#  templateName = {$tx_startertwig.namespaces.ceFolderName}/ceteaser/ceteaser.twig
 #}

@@ -5,7 +5,7 @@
 
 tt_content.text =< lib.twigContentElement
 tt_content.text {
-  templateName = {$tx_startertwig.ceFolderName}/cetext/cetext.twig
+  templateName = {$tx_startertwig.namespaces.ceFolderName}/cetext/cetext.twig
 
   dataProcessors {
     10 = StarterTeam\StarterTwig\DataProcessing\Content\TextProcessor

@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Page;
 
+use Override;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use StarterTeam\StarterTwig\DataProcessing\PageDataProcessorInterface;
 
-/**
- * Class PageProcessor
- */
 class PageProcessor extends AbstractPageProcessor implements PtiDataProcessor, PageDataProcessorInterface
 {
     use MenuProcessorTrait;
 
+    #[Override]
     public function process(array $data, array $configuration = []): ?array
     {
         $this->conf = $configuration;
@@ -36,6 +35,7 @@ class PageProcessor extends AbstractPageProcessor implements PtiDataProcessor, P
         return $this->cObj->cObjGetSingle('< styles.content.get', []);
     }
 
+    #[Override]
     public function getLogoData(): ?array
     {
         return [];
@@ -46,6 +46,7 @@ class PageProcessor extends AbstractPageProcessor implements PtiDataProcessor, P
         return [];
     }
 
+    #[Override]
     public function getMainMenuData(): array
     {
         $mainMenuSettings = $this->conf['menuConfiguration'];

@@ -33,14 +33,18 @@ class TwigEnvironment extends Environment implements SingletonInterface
         $additionalLoaders = array_merge($this->getAdditionalLoaders(), [$this->defineFileSystemLoader()]);
         $loader = new ChainLoader($additionalLoaders);
 
-        parent::__construct($loader, [
-            'cache' => $this->getConfigurationWithKey('disableCache') ? false : static::getCacheDirectory(),
-            'debug' => $GLOBALS['TYPO3_CONF_VARS']['FE']['debug'],
-        ]);
-
         if ($this->isDebug()) {
             $this->addExtension(new DebugExtension());
         }
+
+        parent::__construct(
+            $loader,
+            [
+                // fixme use TYPO3’s cache framework instead of filesystem for caching
+                'cache' => $this->configuration['disableCache'] ? false : static::getCacheDirectory(),
+                'debug' => $GLOBALS['TYPO3_CONF_VARS']['FE']['debug'],
+            ]
+        );
 
         $this->addGlobal('env', 'CMS');
     }
@@ -60,7 +64,7 @@ class TwigEnvironment extends Environment implements SingletonInterface
             return [];
         }
 
-        return array_map(fn (string $loaderClass) => GeneralUtility::makeInstance($loaderClass), $loaderClasses);
+        return array_map(fn(string $loaderClass) => GeneralUtility::makeInstance($loaderClass), $loaderClasses);
     }
 
     /**
@@ -123,7 +127,7 @@ class TwigEnvironment extends Environment implements SingletonInterface
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    private function getConfigurationWithKey(string $key)
+    private function getConfigurationWithKey(string $key): array|string|null
     {
         if ($this->configuration === []) {
             $this->loadConfiguration();

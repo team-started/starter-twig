@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
+use Override;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 
-/**
- * Class DividerProcessor
- */
 class DividerProcessor implements PtiDataProcessor
 {
+    #[Override]
     public function process(array $data, array $configuration): ?array
     {
         return [

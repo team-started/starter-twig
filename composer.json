@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.1",
-        "pti/pti": "dev-feature/support_t3v11 || ^3 || dev-master",
-        "twig/twig": "^3",
-        "typo3/cms-core": "^11.5",
-        "starterteam/starter": "^4.5"
+		"php": "^8.3",
+		"pti/pti": "^4.0 || dev-main",
+		"twig/twig": "^3.14.2",
+		"typo3/cms-core": "^12.4 || ^13.0",
+		"starterteam/starter": "^4.5 || dev-main"
     },
     "suggest": {
         "starterteam/starter-twig-news": "Processing package for EXT:news to work with Twig templates"

@@ -1,3 +1,4 @@
+@import 'EXT:fluid_styled_content/Configuration/TypoScript/Helper/ParseFunc.typoscript'
 @import 'EXT:starter_twig/Configuration/TypoScript/Extension/Twig/'
 
 page {
@@ -5,7 +6,7 @@ page {
 
   10 = PTI
   10 {
-    templateName = {$starter.paths.defaultTemplateName}
+    templateName = {$tx_startertwig.namespaces.pageFolderName}/{$tx_startertwig.namespaces.defaultTemplateName}
     templateRootPaths {
       10 = {$starter.paths.pathToPrivate}Frontend/
     }

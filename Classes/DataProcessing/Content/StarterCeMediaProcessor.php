@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
+use Override;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\TypoLinkStringProcessor;
 use Psr\Log\LoggerInterface;
@@ -12,37 +13,23 @@ use StarterTeam\StarterTwig\Service\RenderMediaService;
 use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
-/**
- * Class StarterCeMediaProcessor
- */
 class StarterCeMediaProcessor implements PtiDataProcessor
 {
     protected array $configuration = [];
 
-    protected ContentObjectRenderer $contentObject;
-
-    protected HeadlineProcessor $headlineProcessor;
-
-    protected RenderMediaService $renderMediaService;
-
-    protected TypoLinkStringProcessor $typoLinkProcessor;
-
     protected LoggerInterface $logger;
 
     public function __construct(
-        ContentObjectRenderer $contentObjectRenderer,
-        HeadlineProcessor $headlineProcessor,
-        RenderMediaService $renderMediaService,
-        TypoLinkStringProcessor $typoLinkStringProcessor,
-        LogManagerInterface $logManager
+        protected ContentObjectRenderer $contentObject,
+        protected HeadlineProcessor $headlineProcessor,
+        protected RenderMediaService $renderMediaService,
+        protected TypoLinkStringProcessor $typoLinkProcessor,
+        LogManagerInterface $logManager,
     ) {
-        $this->contentObject = $contentObjectRenderer;
-        $this->headlineProcessor = $headlineProcessor;
-        $this->renderMediaService = $renderMediaService;
-        $this->typoLinkProcessor = $typoLinkStringProcessor;
         $this->logger = $logManager->getLogger(self::class);
     }
 
+    #[Override]
     public function process(array $data, array $configuration): ?array
     {
         $this->configuration = $configuration;
@@ -128,7 +115,7 @@ class StarterCeMediaProcessor implements PtiDataProcessor
      * @param int|string $default
      * @return int|string
      */
-    protected function getColumnValue($value, $default = 'inherit')
+    protected function getColumnValue(int|string $value, int|string $default = 'inherit'): int|string
     {
         if (($value === 0 || $value === '') && ($default !== 0 && $default !== '')) {
             return $default;

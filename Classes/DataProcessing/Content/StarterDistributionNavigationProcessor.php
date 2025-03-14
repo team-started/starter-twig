@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
+use Override;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
 use StarterTeam\StarterTwig\DataProcessing\Page\MenuProcessorTrait;
 use StarterTeam\StarterTwig\Processor\HeadlineProcessor;
@@ -15,18 +16,13 @@ class StarterDistributionNavigationProcessor implements PtiDataProcessor
 
     public const FALLBACK_TITLE_FIELD = 'nav_title // title';
 
-    protected ContentObjectRenderer $contentObjectRenderer;
-
-    protected HeadlineProcessor $headlineProcessor;
-
     public function __construct(
-        ContentObjectRenderer $contentObjectRenderer,
-        HeadlineProcessor $headlineProcessor
+        protected ContentObjectRenderer $contentObjectRenderer,
+        protected HeadlineProcessor $headlineProcessor,
     ) {
-        $this->contentObjectRenderer = $contentObjectRenderer;
-        $this->headlineProcessor = $headlineProcessor;
     }
 
+    #[Override]
     public function process(array $data, array $configuration): ?array
     {
         return [

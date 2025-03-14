@@ -1,8 +1,13 @@
+@import 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript'
+
 tx_startertwig {
-  pageFolderName = _layouts
-  ceFolderName = 5-contentelements
-  componentFolderName = 4-components
-  objectsFolderName = 3-objects
+  namespaces {
+    ceFolderName =
+    componentFolderName =
+    objectsFolderName =
+    pageFolderName =
+    defaultTemplateName =
+  }
 
   // date formatting
   dateFormats {

@@ -4,46 +4,50 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\Twig\View;
 
-use PrototypeIntegration\PrototypeIntegration\View\TemplateBasedView;
+use Exception;
+use Override;
+use PrototypeIntegration\PrototypeIntegration\View\PtiViewInterface;
+use PrototypeIntegration\PrototypeIntegration\View\TemplateBasedViewInterface;
+use RuntimeException;
 use StarterTeam\StarterTwig\Twig\TwigEnvironment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\View\AbstractView;
-use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
-class TwigView extends AbstractView implements ViewInterface, TemplateBasedView
+class TwigView implements PtiViewInterface, TemplateBasedViewInterface
 {
     protected TwigEnvironment $twigEnvironment;
 
-    protected string $template;
+    protected array $variables = [];
 
-    public function __construct(string $template = '')
+    public function __construct(protected string $template = '')
     {
-        $this->template = $template;
         $this->twigEnvironment = GeneralUtility::makeInstance(TwigEnvironment::class);
     }
 
+    #[Override]
     public function render(): string
     {
         if ($this->template === '') {
-            throw new \RuntimeException('Template file missing.', 1_519_205_250_412);
+            throw new RuntimeException('Template file missing.', 1519205250412);
         }
 
         try {
             $this->moveCustomGlobalsIntoTwigEnvironment();
             return $this->twigEnvironment->render($this->template, $this->variables);
-        } catch (\Exception $exception) {
-            throw new \RuntimeException('Twig view error: ' . $exception->getMessage(), 1_519_205_228_169, $exception);
+        } catch (Exception $exception) {
+            throw new RuntimeException('Twig view error: ' . $exception->getMessage(), 1_519_205_228_169, $exception);
         }
     }
 
+    #[Override]
     public function getTemplate(): string
     {
         return $this->template;
     }
 
-    public function setTemplate(string $template): void
+    #[Override]
+    public function setTemplate(string $templateIdentifier): void
     {
-        $this->template = $template;
+        $this->template = $templateIdentifier;
     }
 
     public function getVariables(): array
@@ -51,6 +55,7 @@ class TwigView extends AbstractView implements ViewInterface, TemplateBasedView
         return $this->variables;
     }
 
+    #[Override]
     public function setVariables(array $variables): void
     {
         $this->variables = $variables;

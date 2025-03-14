@@ -5,7 +5,7 @@
 
 tt_content.header =< lib.twigContentElement
 tt_content.header {
-  templateName = {$tx_startertwig.ceFolderName}/ceheader/ceheader.twig
+  templateName = {$tx_startertwig.namespaces.ceFolderName}/ceheader/ceheader.twig
 
   dataProcessors {
     10 = StarterTeam\StarterTwig\DataProcessing\Content\HeaderProcessor

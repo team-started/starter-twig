@@ -4,51 +4,41 @@ declare(strict_types=1);
 
 namespace StarterTeam\StarterTwig\DataProcessing\Content;
 
+use Override;
 use PrototypeIntegration\PrototypeIntegration\Processor\FileProcessor;
 use PrototypeIntegration\PrototypeIntegration\Processor\PtiDataProcessor;
-use PrototypeIntegration\PrototypeIntegration\Processor\RichtextProcessor;
 use Psr\Log\LoggerInterface;
+use StarterTeam\StarterTwig\Processor\BodyTextProcessor;
 use StarterTeam\StarterTwig\Processor\HeadlineProcessor;
 use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class StarterDownloadProcessor implements PtiDataProcessor
+class StarterM27DownloadProcessor implements PtiDataProcessor
 {
-    /**
-     * @var string
-     */
-    public const CONTENT_TABLE = 'tt_content';
+    public const string CONTENT_TABLE = 'tt_content';
 
-    public const CTYPE = 'starter_download';
+    public const string CTYPE = 'starter_m27_download';
 
-    public const SORT_MAPPING = [
+    public const array SORT_MAPPING = [
         'name' => 'title',
         'type' => 'fileType',
         'size' => 'fileSize',
     ];
-
-    protected FileProcessor $fileProcessor;
-
-    protected RichtextProcessor $richTextProcessor;
-
-    protected HeadlineProcessor $headlineProcessor;
 
     protected LoggerInterface $logger;
 
     protected array $configuration = [];
 
     public function __construct(
-        FileProcessor $fileProcessor,
-        RichtextProcessor $richTextProcessor,
-        HeadlineProcessor $headlineProcessor,
-        LogManagerInterface $logManager
+        protected FileProcessor $fileProcessor,
+        protected BodyTextProcessor $bodyTextProcessor,
+        protected HeadlineProcessor $headlineProcessor,
+        LogManagerInterface $logManager,
     ) {
-        $this->fileProcessor = $fileProcessor;
-        $this->richTextProcessor = $richTextProcessor;
-        $this->headlineProcessor = $headlineProcessor;
         $this->logger = $logManager->getLogger(self::class);
     }
 
+    #[Override]
     public function process(array $data, array $configuration): ?array
     {
         $this->configuration = $configuration;
@@ -66,7 +56,7 @@ class StarterDownloadProcessor implements PtiDataProcessor
             'overline' => $this->headlineProcessor->processOverLine($data),
             'space_before_class' => $data['space_before_class'],
             'space_after_class' => $data['space_after_class'],
-            'bodytext' => $this->richTextProcessor->processRteText($data['bodytext']),
+            'bodytext' => $this->bodyTextProcessor->processBodyText($data),
             'tx_starter_backgroundcolor' => $data['tx_starter_backgroundcolor'],
             'tx_starter_background_fluid' => (bool)$data['tx_starter_background_fluid'],
             'tx_starter_visibility' => $data['tx_starter_visibility'],
@@ -120,7 +110,7 @@ class StarterDownloadProcessor implements PtiDataProcessor
 
         if (!empty($data['filelink_sorting'])) {
             $fieldToSort = (string)static::SORT_MAPPING[$data['filelink_sorting']];
-            uasort($downloadFiles, fn ($a, $b): int => strcmp($a[$fieldToSort], $b[$fieldToSort]));
+            uasort($downloadFiles, fn($a, $b): int => strcmp((string)$a[$fieldToSort], (string)$b[$fieldToSort]));
 
             if ($data['filelink_sorting_direction'] === 'desc') {
                 $downloadFiles = array_reverse($downloadFiles, true);

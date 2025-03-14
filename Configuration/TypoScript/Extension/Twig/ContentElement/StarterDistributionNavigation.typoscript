@@ -4,7 +4,7 @@
 
 tt_content.starter_distribution_navigation =< lib.twigContentElement
 tt_content.starter_distribution_navigation {
-  templateName = {$tx_startertwig.ceFolderName}/m28-distribution-navigation/m28-distribution-navigation.twig
+  templateName = {$tx_startertwig.namespaces.ceFolderName}/m28-distribution-navigation/m28-distribution-navigation.twig
 
   dataProcessors {
     10 = StarterTeam\StarterTwig\DataProcessing\Content\StarterDistributionNavigationProcessor

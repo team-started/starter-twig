@@ -29,12 +29,9 @@ class DateDataProcessor
         'year' => 'Y',
     ];
 
-    protected DateTimeFormatter $dateTimeFormatter;
-
     public function __construct(
-        DateTimeFormatter $dateTimeFormatter
+        protected DateTimeFormatter $dateTimeFormatter,
     ) {
-        $this->dateTimeFormatter = $dateTimeFormatter;
     }
 
     public function process(?DateTime $dateTime, array $formatPattern): ?array

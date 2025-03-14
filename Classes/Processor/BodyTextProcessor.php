@@ -6,21 +6,13 @@ namespace StarterTeam\StarterTwig\Processor;
 
 use PrototypeIntegration\PrototypeIntegration\Processor\RichtextProcessor;
 
-/**
- * Class BodyTextProcessor
- */
 class BodyTextProcessor
 {
-    /**
-     * @var string
-     */
-    public const DEFAULT_DATA_FIELD_NAME = 'bodytext';
+    public const string DEFAULT_DATA_FIELD_NAME = 'bodytext';
 
-    protected RichtextProcessor $rteProcessor;
-
-    public function __construct(RichtextProcessor $richTextProcessor)
-    {
-        $this->rteProcessor = $richTextProcessor;
+    public function __construct(
+        protected RichtextProcessor $rteProcessor,
+    ) {
     }
 
     public function processBodyText(array $data, string $dataField = self::DEFAULT_DATA_FIELD_NAME): string
@@ -41,7 +33,7 @@ class BodyTextProcessor
         }
 
         if (array_key_exists($dataField, $data) && $data[$dataField] !== '') {
-            $value = strip_tags($data[$dataField]);
+            $value = strip_tags((string)$data[$dataField]);
         }
 
         return $value;

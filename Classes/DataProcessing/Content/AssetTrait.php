@@ -93,7 +93,7 @@ trait AssetTrait
     /**
      * @param int|string $value
      */
-    protected function getColumnSize($value, int $columnBase = 12, bool $calculateWithColumnBase = false): int
+    protected function getColumnSize(int|string $value, int $columnBase = 12, bool $calculateWithColumnBase = false): int
     {
         $value = (int)$value;
         $size = $value == 0 ? $columnBase : $value;

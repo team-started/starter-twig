@@ -4,7 +4,7 @@
 
 tt_content.starter_textmedia =< lib.twigContentElement
 tt_content.starter_textmedia {
-  templateName = {$tx_startertwig.ceFolderName}/cetextmedia/cetextmedia.twig
+  templateName = {$tx_startertwig.namespaces.ceFolderName}/cetextmedia/cetextmedia.twig
 
   dataProcessors {
     10 = StarterTeam\StarterTwig\DataProcessing\Content\StarterCeTextMediaProcessor

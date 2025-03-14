@@ -10,15 +10,18 @@ use UnexpectedValueException;
 
 class RenderMediaService
 {
-    protected MediaProcessor $mediaProcessor;
-
-    public function __construct(MediaProcessor $mediaProcessor)
-    {
-        $this->mediaProcessor = $mediaProcessor;
+    public function __construct(
+        protected MediaProcessor $mediaProcessor,
+    ) {
     }
 
-    public function processMedia(array $contentRow, string $table, string $relationField, array $imageConfiguration = [], array $thumbnailConfiguration = []): array
-    {
+    public function processMedia(
+        array $contentRow,
+        string $table,
+        string $relationField,
+        array $imageConfiguration = [],
+        array $thumbnailConfiguration = []
+    ): array {
         try {
             return $this->mediaProcessor->renderMedia(
                 $contentRow,
@@ -34,8 +37,11 @@ class RenderMediaService
         return [];
     }
 
-    public function processMediaElement(FileInterface $file, array $imageConfiguration = [], array $thumbnailConfiguration = []): ?array
-    {
+    public function processMediaElement(
+        FileInterface $file,
+        array $imageConfiguration = [],
+        array $thumbnailConfiguration = []
+    ): ?array {
         try {
             return $this->mediaProcessor->renderMediaElement(
                 $file,

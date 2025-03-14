@@ -6,9 +6,6 @@ namespace StarterTeam\StarterTwig\Processor;
 
 use PrototypeIntegration\PrototypeIntegration\Processor\TypoLinkStringProcessor;
 
-/**
- * Class CtaProcessor
- */
 class CtaProcessor
 {
     /**
@@ -21,11 +18,9 @@ class CtaProcessor
      */
     public const CTA_LINKTEXT_FIELD = 'tx_starter_ctalink_text';
 
-    protected TypoLinkStringProcessor $linkProcessor;
-
-    public function __construct(TypoLinkStringProcessor $typoLinkStringProcessor)
-    {
-        $this->linkProcessor = $typoLinkStringProcessor;
+    public function __construct(
+        protected TypoLinkStringProcessor $linkProcessor,
+    ) {
     }
 
     public function processCta(
